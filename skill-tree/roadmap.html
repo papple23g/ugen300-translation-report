@@ -1,0 +1,90 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>完整研究路線 / UGen300</title><style>body{margin:0;background:#111b2e;color:#e8efff;font:16px/1.75 system-ui,sans-serif}main{max-width:1050px;margin:auto;padding:24px}a{color:#a9dcff}h1,h2,h3{line-height:1.35;color:#f0f7ff}h2{margin-top:1.8em;border-bottom:1px solid #42536a;padding-bottom:.35em}h3{color:#a9dcff;margin-top:1.5em}p,li{overflow-wrap:anywhere}table{border-collapse:collapse;display:block;max-width:100%;overflow-x:auto}th,td{padding:9px 12px;text-align:left;vertical-align:top;border:1px solid #506079}th{background:#263852}code{color:#ffdb9c}a:focus-visible{outline:3px solid #ffc568;outline-offset:3px}.notice{padding:12px 16px;border:1px solid #506079;border-radius:8px;background:#1d2a42}@media(max-width:600px){main{padding:18px 14px}table{overflow:visible}thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}tbody,tr{display:block}tr{border:1px solid #506079;border-radius:8px;margin-bottom:10px;padding:8px 12px}td{display:block;border:0;padding:4px 0}td:first-child{font-weight:700;color:#a9dcff}td:nth-child(2)::before{content:"語言：";font-weight:700}td:nth-child(3)::before{content:"研究工作：";font-weight:700}}</style></head><body><main><nav><a href="index.html">← 回研究技能樹</a> / <a href="sources.html">研究來源資訊</a></nav><p class="notice">公開靜態快照；未公開的研究原件保存在研究電腦。</p><h1>離線會議 AI 完整研究路線</h1>
+<p>2026-11-01 / 規劃範圍：以 IFP 本機及 IFP + UGen300 為目標，比較語音辨識、多語言翻譯與會議總結；保留離線、音訊與人工版本保護。這份路線整理已有結果及接下來的工作，未新增模型推論，也不代表產品驗收。</p>
+<h2>目前判斷與優先順序</h2>
+<ol>
+<li><strong>建立可用的語音基準。</strong> IFP CPU 的官方量化 SenseVoice 是既有八案比較中的優先候選。遠場中文為 72 / 462，錯誤率 15.58%，尚未達研究門檻 15%；英文與混語有固定短案結果。先核對既有證據，再針對 SenseVoice 的遠場、停止排空及 DEMO 配方補足必要驗證。既有研究的 15 秒窗不能直接代表 DEMO 的 5 秒窗品質或實際畫面延遲。八案結果（原件在研究電腦） / DEMO 路由（原件在研究電腦）</li>
+<li><strong>保留備選模型結果，以選型價值決定投入。</strong> Nemotron 的 IFP 短尾曾出現空文字；帶前文拼接的單案候選未過預定條件。它的專屬短尾除錯暫不優先，除非後續需求或可比較證據顯示它能補足主候選缺口；問題不能推論為所有 STT 模型都會發生。短尾對照（原件在研究電腦）</li>
+<li><strong>依語言優先分組擴展語音、翻譯與摘要。</strong> 先盤點每種輸入語言、文字輸出及目標語言的既有能力與缺口，再準備資料和受控驗證；不因模型卡、介面語系或其他平台有支援就標成目標設備已通過。</li>
+<li><strong>並行準備會議總結。</strong> 先以既有可行 runtime 和人工事實參考篩選短例，將合格候選推進到完整會議、來源追溯與完成時間；沒有可用候選時先處理品質，不把格式正確或摘錄原文當作合格摘要。</li>
+<li><strong>比較設備分工並完成整機驗證。</strong> 分別記錄 IFP CPU / IFP NPU / IFP GPU / UGen NPU 的可執行性與實測，最後在實際收音、畫面與資源並行條件下比較 IFP 單機和 IFP + UGen 的增量效益。</li>
+</ol>
+<p>語言與資料盤點分別支援語音、翻譯與會議總結；設備連線是 IFP + UGen 整機驗證的條件。</p>
+<h2>多語言研究順序</h2>
+<p>下表採 Optoma AI Platform 的 <code>LANGUAGE_PRIORITY_GROUPS</code> 作<strong>研究排序參考</strong>。它原用於 AI Command / UM RAG 的文字語言測試與報告，並非已核准的 UGen300 STT 支援清單；同一組內沒有已確認的先後順序。英文與繁體中文先作基準，後續依分組盤點和測試，不因其他語系尚待資料而阻止 P1 研究。</p>
+<table>
+<thead>
+<tr>
+<th>分組</th>
+<th>語言代碼 / 說明</th>
+<th>本計畫的處置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P1</td>
+<td><code>en</code> 英文、<code>zh-Hant</code> 繁體中文</td>
+<td>沿用既有中英 / 混語研究，補齊實際會議與顯示驗證。</td>
+</tr>
+<tr>
+<td>P2</td>
+<td><code>vi</code> 越南語、<code>pl</code> 波蘭語、<code>es</code> 西班牙語</td>
+<td>下一批盤點音訊、人工參考與可在目標設備運行的候選。</td>
+</tr>
+<tr>
+<td>P3</td>
+<td><code>hi</code> 印地語、<code>cs</code> 捷克語、<code>fr</code> 法語</td>
+<td>依資料、模型及目標 runtime 准入，接續評測。</td>
+</tr>
+<tr>
+<td>P4</td>
+<td><code>ja</code> 日語、<code>de</code> 德語、<code>pt</code> 葡萄牙語</td>
+<td>分語種核對模型聲稱、目標部署與品質。</td>
+</tr>
+<tr>
+<td>P5</td>
+<td><code>fil</code> 菲律賓語、<code>zh-Hans</code> 簡體中文</td>
+<td>另核語言 / 文字與地區變體對應，不把字形轉換當語音品質。</td>
+</tr>
+<tr>
+<td>P6+</td>
+<td><code>nl</code> 荷蘭語、<code>tr</code> 土耳其語、<code>it</code> 義大利語、<code>ko</code> 韓語、<code>sv</code> 瑞典語、<code>hu</code> 匈牙利語</td>
+<td>保留全組研究範圍，按來源、授權及目標入口逐項準入。</td>
+</tr>
+<tr>
+<td>P7</td>
+<td><code>ar</code> 阿拉伯語、<code>da</code> 丹麥語、<code>el</code> 希臘語、<code>fa</code> 波斯語、<code>fi</code> 芬蘭語、<code>id</code> 印尼語、<code>nb</code> 挪威語 Bokmål、<code>ro</code> 羅馬尼亞語、<code>ru</code> 俄語、<code>th</code> 泰語</td>
+<td>保留全組研究範圍，先確認書寫 / 語音變體及可用評分。</td>
+</tr>
+</tbody>
+</table>
+<p>這是 29 個<strong>文字語言代碼</strong>，其中繁體 / 簡體是文字變體，不能直接計成不同口語或代替正式的 27 語言名單。產品需求中的 27 語清單尚未取得；輸入語音、顯示文字、翻譯目標和摘要輸出須各自確認。每一語別區分「來源聲稱 / 資產與執行環境可用 / 目標品質已測 / 自然會議已驗收」。</p>
+<p>來源：參考 AI Platform 文字語言分組與測試報告規則；原始專案檔案保存在研究電腦。</p>
+<h2>各研究軌與關卡</h2>
+<h3>語音辨識</h3>
+<ul>
+<li>P1 先保留中文、英文、混語與遠場基準及固定評分；短尾先檢查 SenseVoice 現有結果，缺口才以少量代表音訊補測。多人重疊與切窗目前只是遠場共同漏字的待查因素，不先當成已證實原因。</li>
+<li>P2 至 P7 先按語言 / 地區 / 腔調核對模型來源宣稱、授權、目標裝置 runtime、資源與音檔 / 人工參考。SenseVoiceSmall 原始文件明列中文、英文、日文、韓文與粵語；這不證明本專案的量化模型在其他優先語言有品質或可用性結果。<a href="https://huggingface.co/FunAudioLLM/SenseVoiceSmall">模型卡</a></li>
+<li>可執行後先比較同一音訊及參考，記模型 / 前處理 / 視窗 / 硬體 / 分母 / S-D-I / 完整性 / 計時與資源；按語言與書寫特性預先凍結字元或詞的正規化與錯誤率。現有中文 CER ≤15%、英文 WER ≤20%、中英混語 MER ≤20% 是研究門檻；其他語言的指標及門檻須另訂，不把舊門檻直接套用。</li>
+<li>有價值的新候選才做小規模目標裝置對照；無相容入口的模型或轉換是高風險可行性研究，先設成本上限、停止條件並取得核准，不列為一般長測。</li>
+</ul>
+<h3>多語言翻譯</h3>
+<ul>
+<li>沿用已完成的中英六模型受控文字結果；品質由 LLM 判讀且尚未人工複核，持續輸入測試也不代表自然會議 / 畫面延遲。</li>
+<li>以既有英文 / 繁中方向作基準，逐 P 組確認實際需要的來源語言與目標語言，再逐語對盤點可用模型、授權、裝置資源與離線條件。不要把語音識別語言、UI 語系和翻譯輸出語言混為一項。</li>
+<li>以同一人工核對來源評估忠實、遺漏、數字、人名、否定、目標語言與完整性；區分乾淨人工逐字稿和 ASR 輸出，並測試持續輸入 / 尾段排空。字幕與譯文的 p95 仍以實際句尾到畫面計算。</li>
+</ul>
+<h3>會議總結</h3>
+<ul>
+<li>已有 Qwen3、Gemma 等有限案例探索，但沒有可直接自動採用的合格改寫摘要。Gemma4 的來源分類嚴格條件曾為 0 / 6，Gemma3 1B 的四個完整摘要有核心錯義；這些屬各自固定測試，不推論整個模型家族均不可行。摘要探索（原件在研究電腦） / IFP 文字研究（原件在研究電腦）</li>
+<li>先建立中 / 英 / 混語開發與隔離資料，為決議、行動、負責人、日期和必要主題建立人工事實參考與可追溯來源；既有已曝光資料只作開發。先以完整人工逐字稿評估摘要，再獨立評估實際 ASR 錯誤的影響。</li>
+<li>僅對目標 runtime / 記憶體可行且有新機制的候選進行短例篩選，人工核對數字、否定、角色、日期及來源；合格候選才進全長快照分塊 / 合併與資源測量，最後再擴展其他語言及輸出語種。</li>
+<li>停止並排空後封存完整會議快照，記錄 session / generation、段落版本與 SHA；依 tokenizer 預算分塊並保留原始來源。研究門檻是 60 分鐘會議在 600 秒內完成；明示決議 / 行動 / 負責人 / 日期零漏編、零杜撰，其他必要主題以人工參考為分母至少 90%。逾時、截斷及無輸出計入分母。原文未指派者標示身分待確認，未給期限標示未指定。摘要評分條件（原件在研究電腦）</li>
+</ul>
+<h3>資料、整機與產品驗收</h3>
+<ul>
+<li>至少準備三場未用於本研究調整的中文、英文、混語自然會議，各至少 60 分鐘，核對使用權、音訊完整性、逐字稿與會議事實參考；其他語言另依實際範圍準備。現有三場英文 AMI 已用於研究，不能當新驗收資料；其他來源與使用權未知不計作有或無。資料盤點（原件在研究電腦）</li>
+<li>先比較人工逐字稿與 ASR 輸入，再以實際收音、字幕 / 譯文畫面、多人遠場及白板 / 投影背景測試；包含停止排空、長時間負載、故障恢復、版本保護及真離線。正式 2 秒要求的起訖、部分 / final 與統計口徑仍須確認。</li>
+<li>IFP Android 直連 UGen 尚待 USB / BSP 與相容 runtime；Windows 控制 UGen 或 proxy 不能冒充直連。SenseVoice 的 UGen 完整圖解析與單層數值差異尚未解決，維持暫停；取得具體可行入口後，先訂成本上限與停損條件再評估重啟。研究矩陣（原件在研究電腦） / UGen 現況（原件在研究電腦）</li>
+</ul>
+<p>尚未核定全程工時；候選、語言、資料、轉換與目標設備條件確定後，分別估算準備 / 短例 / 模型轉換 / 設備測試 / 報告整合，遇到實際阻礙再更新。</p>
+</main></body></html>
