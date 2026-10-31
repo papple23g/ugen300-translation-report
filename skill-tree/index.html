@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UGen300 研究技能樹</title>
+<style>
+:root{color-scheme:dark;--bg:#0a0e18;--panel:#131c2c;--panel-deep:#101725;--text:#f0f5f5;--muted:#b5c4d2;--line:#34455a;--gold:#f2c47c;--green:#9adbb8;--blue:#a5d5f0;--red:#ffc2ab}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;color:var(--text);font:16px/1.6 "Microsoft JhengHei","PingFang TC",system-ui,sans-serif;background:radial-gradient(ellipse at 50% -5%,#27354b 0,transparent 40%),linear-gradient(160deg,#101522 0,#0a0e18 56%,#101722 100%);min-height:100vh}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:radial-gradient(#788da3 0.7px,transparent 0.7px);background-size:24px 24px}
+button,a{font:inherit;-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid #ffe2a7;outline-offset:4px}
+a{color:#a4dff1;text-decoration-thickness:1px;text-underline-offset:4px;overflow-wrap:anywhere}
+.icon-defs{position:absolute;width:0;height:0;overflow:hidden}
+.page{position:relative;width:min(1600px,100%);margin:auto;padding:30px clamp(18px,3vw,48px) 54px}
+.masthead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:18px;border-bottom:1px solid #344153}
+.masthead-links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 16px}
+.brand{display:flex;align-items:center;gap:10px;color:#d2dce6;font-size:13px;font-weight:700;letter-spacing:.1em}
+.brand-mark{width:27px;height:27px;display:grid;place-items:center;border:1px solid #87cfca;color:#a7e0da;transform:rotate(45deg)}
+.brand-mark span{transform:rotate(-45deg);font-size:12px}
+.masthead-link{font-size:14px;white-space:nowrap}
+.hero{display:flex;align-items:end;justify-content:space-between;gap:24px;padding:32px 0 22px}
+.eyebrow,.section-kicker{margin:0;color:#92d5d0;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+h1{margin:5px 0 3px;font-size:clamp(30px,3vw,44px);line-height:1.2;letter-spacing:.02em}
+.hero p{margin:8px 0 0;color:var(--muted)}
+.timestamps{flex:none;text-align:right;color:var(--muted);font-size:13px;line-height:1.7}
+.timestamps span{display:block}
+.summary-heading,.tree-heading{display:flex;align-items:end;justify-content:space-between;gap:18px;margin:0 0 12px}
+.summary-heading h2,.tree-heading h2{margin:2px 0 0;font-size:22px;line-height:1.35}
+.summary-heading p,.tree-heading p{margin:0;color:var(--muted);font-size:13px}
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.summary-card{position:relative;min-width:0;padding:16px 18px 13px;border:1px solid #34455a;border-radius:10px;background:linear-gradient(145deg,#172437,#111927)}
+.summary-card::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;background:var(--summary-accent);border-radius:0 3px 3px 0}
+.summary-card.done{--summary-accent:#92d9b4}
+.summary-card.active{--summary-accent:#8ed7e4}
+.summary-card.next{--summary-accent:#f2c47c}
+.summary-card h3{margin:0 0 8px;font-size:15px;color:var(--summary-accent)}
+.summary-list{list-style:none;margin:0;padding:0}
+.summary-list li+li{border-top:1px solid #28384b}
+.summary-list button{width:100%;padding:7px 0;border:0;text-align:left;color:var(--text);background:none;line-height:1.45}
+.summary-list button:hover{text-decoration:underline;text-decoration-color:var(--summary-accent);text-underline-offset:4px}
+.tree-section{margin-top:38px}
+.tree-heading{padding-bottom:13px;border-bottom:1px solid #35485a}
+.tree-heading p{max-width:480px;text-align:right}
+.tree-root{display:flex;align-items:center;justify-content:center;gap:12px;margin:20px auto 36px}
+.root-emblem{display:grid;place-items:center;width:58px;height:64px;color:#eacb8c;background:#dbbd81;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);position:relative;filter:drop-shadow(0 0 12px #e4bb7766)}
+.root-emblem::before{content:"";position:absolute;inset:2px;clip-path:inherit;background:#252331}
+.root-emblem svg{position:relative;width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.root-label{font-weight:700;line-height:1.35}
+.root-label span{display:block;color:#c5cbd1;font-size:12px;font-weight:400}
+.tree{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;align-items:start}
+.tree::before{content:"";position:absolute;top:-19px;left:10%;right:10%;height:1px;background:#79918f}
+.tree::after{content:"";position:absolute;top:-37px;left:50%;height:18px;width:1px;background:#79918f}
+.branch{--branch:#9bd3d0;position:relative;min-width:0;padding:16px 12px 14px;border:1px solid #2c3c50;border-top:2px solid var(--branch);border-radius:10px;background:linear-gradient(180deg,#151f2f 0,#101723 100%)}
+.branch::before{content:"";position:absolute;left:50%;top:-20px;height:18px;width:1px;background:var(--branch);opacity:.8}
+.branch[data-group="speech"]{--branch:#8dd8e3}
+.branch[data-group="translation"]{--branch:#f0c582}
+.branch[data-group="summary"]{--branch:#c7b6f0}
+.branch[data-group="connection"]{--branch:#9adbb8}
+.branch[data-group="acceptance"]{--branch:#efb5c4}
+.branch-head{display:flex;align-items:center;gap:10px;min-height:42px;margin-bottom:14px}
+.branch-index{display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--branch);border-radius:50%;color:var(--branch);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.branch-head h3{margin:0;font-size:16px;line-height:1.35}
+.branch-nodes{position:relative;display:grid;gap:10px}
+.branch-nodes::before{content:"";position:absolute;left:24px;top:5px;bottom:10px;width:1px;background:var(--branch);opacity:.35}
+.node{position:relative;display:grid;grid-template-columns:48px minmax(0,1fr);gap:11px;width:100%;min-height:130px;padding:13px 11px;border:1px solid #42536a;border-radius:9px;text-align:left;color:var(--text);background:linear-gradient(145deg,#1c2b3e,#162131);box-shadow:0 5px 15px #03071136;transition:border-color .16s ease,transform .16s ease,background .16s ease}
+.node:hover{border-color:var(--branch);background:linear-gradient(145deg,#22354a,#192739);transform:translateY(-2px)}
+.node:active{transform:translateY(0)}
+.node[data-status="done"]{border-color:#567968}
+.node[data-status="active"]{border-color:#507d8b}
+.node[data-status="paused"],.node[data-status="blocked"]{border-color:#806a51}
+.icon-frame{position:relative;display:grid;place-items:center;width:48px;height:52px;color:var(--branch);background:var(--branch);clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);filter:drop-shadow(0 0 8px #84d4db28)}
+.icon-frame::before{content:"";position:absolute;inset:2px;clip-path:inherit;background:#152233}
+.icon-frame svg{position:relative;width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.node-body{display:flex;flex-direction:column;min-width:0;min-height:100%}
+.node-title{font-size:16px;font-weight:700;line-height:1.4;overflow-wrap:anywhere}
+.node-status{display:block;margin-top:5px;color:var(--muted);font-size:13px}
+.node[data-status="done"] .node-status{color:var(--green)}
+.node[data-status="active"] .node-status{color:#a7dfe9}
+.node[data-status="paused"] .node-status,.node[data-status="blocked"] .node-status{color:#f4cc96}
+.progress-wrap{display:block;margin-top:auto;padding-top:12px}
+.progress-caption{display:flex;justify-content:space-between;gap:5px;color:#c1cdd9;font-size:12px;font-variant-numeric:tabular-nums}
+progress{display:block;width:100%;height:5px;margin-top:5px;appearance:none;border:0;border-radius:8px;overflow:hidden;background:#35455a}
+progress::-webkit-progress-bar{background:#35455a}
+progress::-webkit-progress-value{background:var(--branch);border-radius:8px}
+progress::-moz-progress-bar{background:var(--branch);border-radius:8px}
+.empty-progress{color:var(--muted);font-size:12px}
+.footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:28px;padding-top:18px;border-top:1px solid #344153;color:var(--muted);font-size:14px}
+.footer-links{display:flex;flex-wrap:wrap;gap:12px 20px}
+noscript{display:block;margin:24px 0;padding:16px;border:1px solid var(--gold)}
+dialog{width:min(720px,calc(100vw - 32px));max-height:calc(100dvh - 36px);padding:0;overflow:auto;overscroll-behavior:contain;color:var(--text);background:#121c2b;border:1px solid #61748a;border-radius:13px;box-shadow:0 24px 80px #000b}
+dialog::backdrop{background:#050812d9}
+.dialog-head{position:sticky;top:0;z-index:1;display:flex;align-items:flex-start;justify-content:space-between;gap:18px;padding:21px 24px;background:#172337;border-bottom:1px solid #3b4c62}
+.dialog-head h2{margin:0;font-size:23px;line-height:1.35}
+.dialog-head p{margin:5px 0 0;color:var(--muted);font-size:14px}
+.close-button{min-height:44px;padding:8px 15px;border:1px solid #7691a6;border-radius:7px;color:var(--text);background:#20334a;white-space:nowrap}
+.close-button:hover{background:#2b435e}
+.dialog-body{padding:20px 24px 28px}
+.detail-statuses{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.detail-pill{padding:5px 10px;border:1px solid #61748a;border-radius:5px;color:#e4eef3;font-size:13px}
+.detail-block{padding:0 0 18px;margin:0 0 18px;border-bottom:1px solid #344153}
+.detail-block:last-child{margin-bottom:0;border:0}
+.detail-block h3{margin:0 0 7px;color:#a8d9e3;font-size:14px}
+.detail-block p{margin:0;overflow-wrap:anywhere}
+.detail-block ul{margin:0;padding:0;list-style:none}
+.todo{display:grid;grid-template-columns:56px minmax(0,1fr);gap:10px;padding:6px 0}
+.todo-state{font-size:13px;color:var(--muted)}
+.todo.done .todo-state{color:var(--green)}
+.detail-sources li{margin:7px 0}
+.dependency-button{margin:4px 8px 4px 0;padding:6px 10px;border:1px solid #667c92;border-radius:6px;background:#1a2a3d;color:#c2e5f1}
+@media(max-width:1250px){.tree{grid-template-columns:repeat(3,minmax(0,1fr))}.tree::before,.tree::after,.branch::before{display:none}.tree-root{justify-content:flex-start;margin-bottom:20px}}
+@media(max-width:850px){.tree{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{align-items:start;flex-direction:column;gap:8px}.timestamps{text-align:left}.tree-heading{align-items:start;flex-direction:column;gap:6px}.tree-heading p{text-align:left}}
+@media(max-width:620px){.page{padding:20px 16px 38px}.summary-grid,.tree{grid-template-columns:1fr}.summary-grid{gap:9px}.summary-card{padding:13px 16px}.tree-section{margin-top:30px}.branch{padding:13px 12px}.node{min-height:116px}.dialog-head{padding:18px 16px}.dialog-body{padding:18px 16px 24px}.masthead{align-items:flex-start}.masthead-link{white-space:normal;text-align:right}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.node{transition:none}}
+</style>
+</head>
+<body>
+<svg class="icon-defs" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="icon-core" viewBox="0 0 24 24"><path d="M8 4h8v4h4v8h-4v4H8v-4H4V8h4zM9 9h6v6H9zM12 1v3M12 20v3M1 12h3M20 12h3"/></symbol>
+  <symbol id="icon-speech" viewBox="0 0 24 24"><path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3Z"/><path d="M6 11v1a6 6 0 0 0 12 0v-1M12 18v3M9 21h6"/></symbol>
+  <symbol id="icon-translation" viewBox="0 0 24 24"><path d="M3 5h11M8.5 3v2M12 5c-.5 5-3.5 8-8 10M5 9c1.5 2 3.5 3.5 6 4.5M14 20l3.5-9 3.5 9M15.1 17h4.8"/></symbol>
+  <symbol id="icon-summary" viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6zM15 3v4h3M9 11h6M9 15h6M9 18h4"/></symbol>
+  <symbol id="icon-connection" viewBox="0 0 24 24"><path d="M8 8V4M16 8V4M6 8h12v3a6 6 0 0 1-6 6v4M9 21h6"/></symbol>
+  <symbol id="icon-acceptance" viewBox="0 0 24 24"><path d="M12 3 19 6v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6zM9 12l2 2 4-4"/></symbol>
+</svg>
+<main class="page">
+  <div class="masthead">
+    <div class="brand"><span class="brand-mark" aria-hidden="true"><span>U</span></span> UGEN300 / RESEARCH</div>
+    <nav class="masthead-links" aria-label="研究圖表"><span class="masthead-link">STT 研究演進（本機）</span><a class="masthead-link" href="https://papple23g.github.io/ugen300-translation-report/">翻譯研究 ↗</a></nav>
+  </div>
+  <header class="hero">
+    <div><p class="eyebrow">Research roadmap</p><h1>研究技能樹</h1><p>掌握目前進展，點開節點查看下一步與來源資訊。</p><p>公開靜態快照；未公開的研究原件以「本機」標示。</p></div>
+    <div class="timestamps"><span>資料核對：<time id="reviewed-at"></time></span><span>頁面更新：<time id="last-updated" datetime="2026-11-01T04:04:44+08:00">2026-11-01 04:04:44</time>（台灣時間）</span></div>
+  </header>
+  <section aria-labelledby="summary-title">
+    <div class="summary-heading"><div><p class="section-kicker">At a glance</p><h2 id="summary-title">目前進度</h2></div><p>工作與品質驗收分開；進行中是研究方向，不表示程式正在執行。</p></div>
+    <div class="summary-grid">
+      <section class="summary-card done" aria-labelledby="done-title"><h3 id="done-title">已完成的工作</h3><ul class="summary-list" id="summary-done"></ul></section>
+      <section class="summary-card active" aria-labelledby="active-title"><h3 id="active-title">進行中的方向</h3><ul class="summary-list" id="summary-active"></ul></section>
+      <section class="summary-card next" aria-labelledby="next-title"><h3 id="next-title">接下來要做</h3><ul class="summary-list" id="summary-next"></ul></section>
+    </div>
+  </section>
+  <section class="tree-section" aria-labelledby="tree-title">
+    <div class="tree-heading"><div><p class="section-kicker">Research branches</p><h2 id="tree-title">探索研究分支</h2></div><p>連線表示研究分類；必要先決條件與證據列在節點詳情。</p></div>
+    <div class="tree-root"><div class="root-emblem" aria-hidden="true"><svg><use href="#icon-core"></use></svg></div><div class="root-label">離線會議 AI<span>研究目標</span></div></div>
+    <div class="tree" id="tree" aria-label="研究里程碑"></div>
+  </section>
+  <footer class="footer">
+    <span>進度條為已完成工作項／已列工作項，不代表產品完成率。</span>
+    <div class="footer-links"><a href="archive/研究總覽.html">封存研究總覽</a><a href="archive/離線AI模型矩陣.html">封存模型矩陣</a><a href="../research/README.md">研究原件</a><a href="archive/算力棒研究路線-20261019-相容連結.html">2026-10-19 歷史路線圖</a></div>
+  </footer>
+  <noscript>此頁需要 JavaScript 顯示研究節點；也可開啟研究總覽與研究原件。</noscript>
+</main>
+<dialog id="detail-dialog" aria-labelledby="detail-title">
+  <div class="dialog-head"><div><h2 id="detail-title"></h2><p id="detail-summary"></p></div><form method="dialog"><button class="close-button" aria-label="關閉詳情">關閉</button></form></div>
+  <div class="dialog-body"><div class="detail-statuses" id="detail-statuses"></div><div id="detail-content"></div></div>
+</dialog>
+<script type="application/json" id="dashboard-data">{"schemaVersion":2,"title":"UGen300 研究技能樹","sources":{"overview":{"name":"研究總覽（封存）（原件僅本機）","href":"sources.html#source-overview"},"stt":{"name":"語音辨識研究演進（原件僅本機）","href":"sources.html#source-stt"},"matrix":{"name":"離線 AI 模型矩陣（封存）（原件僅本機）","href":"sources.html#source-matrix"},"index":{"name":"研究證據索引（原件僅本機）","href":"sources.html#source-index"},"requirements":{"name":"研究門檻與正式需求（原件僅本機）","href":"sources.html#source-requirements"},"ifp-scores":{"name":"IFP 官方量化模型八案結果（原件僅本機）","href":"sources.html#source-ifp-scores"},"nemo-2g-scores":{"name":"IFP Nemotron 3.5 / 2 GiB 八案獨立評分與收據（原件僅本機）","href":"sources.html#source-nemo-2g-scores"},"farfield-overlap":{"name":"四配方遠場刪字重合分析（原件僅本機）","href":"sources.html#source-farfield-overlap"},"nemo-demo-smoke":{"name":"Nemotron DEMO bridge 的 IFP 短音訊驗證（原件僅本機）","href":"sources.html#source-nemo-demo-smoke"},"nemo-tail-audit":{"name":"Nemotron 短尾音訊與標註時間稽核（原件僅本機）","href":"sources.html#source-nemo-tail-audit"},"nemo-tail-context":{"name":"Nemotron 短尾與前文脈絡對照（原件僅本機）","href":"sources.html#source-nemo-tail-context"},"nemo-tail-reference":{"name":"Nemotron 尾段參考詞型匿名對照（原件僅本機）","href":"sources.html#source-nemo-tail-reference"},"nemo-tail-order":{"name":"Nemotron 短尾反向窗序對照（原件僅本機）","href":"sources.html#source-nemo-tail-order"},"nemo-tail-merge":{"name":"Nemotron 短尾拼接候選單案對照（原件僅本機）","href":"sources.html#source-nemo-tail-merge"},"listening-review":{"name":"英文短尾與中文遠場聽音核對（原件僅本機）","href":"sources.html#source-listening-review"},"natural-audit-20261101":{"name":"自然會議資料匿名中繼資料盤點（原件僅本機）","href":"sources.html#source-natural-audit-20261101"},"ugen-shapes":{"name":"SenseVoice 實驗圖的 ReduceMean 形狀補充（原件僅本機）","href":"sources.html#source-ugen-shapes"},"ugen-recorded-errors":{"name":"SenseVoice 實驗圖的 DFC 記錄型解析錯誤（原件僅本機）","href":"sources.html#source-ugen-recorded-errors"},"ugen-error-summary":{"name":"SenseVoice 實驗圖的 DFC 診斷摘要（原件僅本機）","href":"sources.html#source-ugen-error-summary"},"ugen-parity":{"name":"UGen 實驗圖的 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-parity"},"ugen-shape-parity":{"name":"補充形狀後的 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-shape-parity"},"ugen-parse-timeout":{"name":"補充形狀後的解析逾時收據（原件僅本機）","href":"sources.html#source-ugen-parse-timeout"},"ugen-speech-parity":{"name":"SenseVoice 四段真實音訊 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-speech-parity"},"ugen-metadata-parity":{"name":"SenseVoice 遮罩圖與補充形狀圖 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-metadata-parity"},"ugen-attention-prepare":{"name":"注意力子圖與合成輸入檢查（原件僅本機）","href":"sources.html#source-ugen-attention-prepare"},"ugen-attention-nomask":{"name":"無遮罩注意力子圖 DFC 解析（原件僅本機）","href":"sources.html#source-ugen-attention-nomask"},"ugen-attention-where":{"name":"Where 遮罩注意力子圖 DFC 解析（原件僅本機）","href":"sources.html#source-ugen-attention-where"},"ugen-attention-additive":{"name":"加性遮罩注意力子圖 DFC 解析（原件僅本機）","href":"sources.html#source-ugen-attention-additive"},"ugen-additive-parity":{"name":"加性遮罩圖的四段語音 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-additive-parity"},"ugen-monitor-full":{"name":"70 層注意力監測 / 完整窗（原件僅本機）","href":"sources.html#source-ugen-monitor-full"},"ugen-monitor-near":{"name":"70 層注意力監測 / 近場（原件僅本機）","href":"sources.html#source-ugen-monitor-near"},"ugen-monitor-english":{"name":"70 層注意力監測 / 英文尾窗（原件僅本機）","href":"sources.html#source-ugen-monitor-english"},"ugen-monitor-short":{"name":"70 層注意力監測 / 極短尾窗（原件僅本機）","href":"sources.html#source-ugen-monitor-short"},"ugen-additive-dfc":{"name":"加性遮罩完整圖 DFC 解析診斷（原件僅本機）","href":"sources.html#source-ugen-additive-dfc"},"ugen-attention-opt":{"name":"加性遮罩子圖量化失敗（原件僅本機）","href":"sources.html#source-ugen-attention-opt"},"ugen-attention-opt-guard":{"name":"子圖量化資源監測（原件僅本機）","href":"sources.html#source-ugen-attention-opt-guard"},"ugen-attention-nofuse-opt":{"name":"停用融合後單層子圖量化（原件僅本機）","href":"sources.html#source-ugen-attention-nofuse-opt"},"ugen-attention-nofuse-compile":{"name":"停用融合後單層子圖 HEF 編譯（原件僅本機）","href":"sources.html#source-ugen-attention-nofuse-compile"},"ugen-attention-nofuse-opt-guard":{"name":"停用融合量化資源監測（原件僅本機）","href":"sources.html#source-ugen-attention-nofuse-opt-guard"},"ugen-attention-nofuse-compile-guard":{"name":"單層 HEF 編譯資源監測（原件僅本機）","href":"sources.html#source-ugen-attention-nofuse-compile-guard"},"ugen-attention-static-hef":{"name":"單層 HEF 的 HailoRT 靜態解析（原件僅本機）","href":"sources.html#source-ugen-attention-static-hef"},"ugen-attention-device":{"name":"UGen 單層合成輸入推論（原件僅本機）","href":"sources.html#source-ugen-attention-device"},"ugen-attention-cpu-reference":{"name":"CPU 單層合成輸入參考（原件僅本機）","href":"sources.html#source-ugen-attention-cpu-reference"},"ugen-attention-cpu-guard":{"name":"CPU 單層參考資源監測（原件僅本機）","href":"sources.html#source-ugen-attention-cpu-guard"},"ugen-attention-numeric-comparison":{"name":"單層 CPU / NPU 數值比較（原件僅本機）","href":"sources.html#source-ugen-attention-numeric-comparison"},"ugen-attention-row-analysis":{"name":"單層遮罩輸出列對照（原件僅本機）","href":"sources.html#source-ugen-attention-row-analysis"},"ugen-attention-hn-mask":{"name":"單層 HN 遮罩映射（原件僅本機）","href":"sources.html#source-ugen-attention-hn-mask"},"ugen-per-key-prepare":{"name":"逐 key 遮罩候選 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-per-key-prepare"},"ugen-per-key-parse":{"name":"逐 key 遮罩 HN 形狀檢查（原件僅本機）","href":"sources.html#source-ugen-per-key-parse"},"ugen-per-key-prepare-guard":{"name":"逐 key 遮罩 CPU 對照資源監測（原件僅本機）","href":"sources.html#source-ugen-per-key-prepare-guard"},"ugen-per-key-parse-guard":{"name":"逐 key 遮罩解析資源監測（原件僅本機）","href":"sources.html#source-ugen-per-key-parse-guard"},"ugen-packed-key-prepare":{"name":"packed-key 遮罩候選 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-packed-key-prepare"},"ugen-packed-key-parse":{"name":"packed-key 遮罩 DFC 解析（原件僅本機）","href":"sources.html#source-ugen-packed-key-parse"},"ugen-packed-key-prepare-guard":{"name":"packed-key CPU 對照資源監測（原件僅本機）","href":"sources.html#source-ugen-packed-key-prepare-guard"},"ugen-packed-key-parse-guard":{"name":"packed-key 解析資源監測（原件僅本機）","href":"sources.html#source-ugen-packed-key-parse-guard"},"ugen-transposed-key-prepare":{"name":"轉置遮罩候選 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-transposed-key-prepare"},"ugen-transposed-key-parse":{"name":"轉置遮罩 HN 契約檢查（原件僅本機）","href":"sources.html#source-ugen-transposed-key-parse"},"ugen-transposed-key-prepare-guard":{"name":"轉置遮罩 CPU 對照資源監測（原件僅本機）","href":"sources.html#source-ugen-transposed-key-prepare-guard"},"ugen-transposed-key-parse-guard":{"name":"轉置遮罩解析資源監測（原件僅本機）","href":"sources.html#source-ugen-transposed-key-parse-guard"},"ugen-transposed-diagnostic-optimize":{"name":"轉置遮罩單層診斷量化（原件僅本機）","href":"sources.html#source-ugen-transposed-diagnostic-optimize"},"ugen-transposed-diagnostic-compile":{"name":"轉置遮罩單層 HEF 編譯（原件僅本機）","href":"sources.html#source-ugen-transposed-diagnostic-compile"},"ugen-transposed-diagnostic-optimize-guard":{"name":"轉置遮罩量化資源監測（原件僅本機）","href":"sources.html#source-ugen-transposed-diagnostic-optimize-guard"},"ugen-transposed-diagnostic-compile-guard":{"name":"轉置遮罩編譯資源監測（原件僅本機）","href":"sources.html#source-ugen-transposed-diagnostic-compile-guard"},"ugen-transposed-diagnostic-audit":{"name":"轉置遮罩 HN 靜態稽核（原件僅本機）","href":"sources.html#source-ugen-transposed-diagnostic-audit"},"ugen-transposed-static-hef":{"name":"轉置遮罩 HEF 的 HailoRT 靜態解析（原件僅本機）","href":"sources.html#source-ugen-transposed-static-hef"},"ugen-transposed-device":{"name":"轉置遮罩 UGen 合成輸入推論（原件僅本機）","href":"sources.html#source-ugen-transposed-device"},"ugen-transposed-comparison":{"name":"轉置遮罩 CPU / NPU 數值比較（原件僅本機）","href":"sources.html#source-ugen-transposed-comparison"},"ugen-transposed-block-analysis":{"name":"轉置遮罩輸出通道區塊對照（原件僅本機）","href":"sources.html#source-ugen-transposed-block-analysis"},"ugen-nomask-cpu":{"name":"無遮罩單層 CPU 控制（原件僅本機）","href":"sources.html#source-ugen-nomask-cpu"},"ugen-nomask-cpu-guard":{"name":"無遮罩 CPU 控制資源監測（原件僅本機）","href":"sources.html#source-ugen-nomask-cpu-guard"},"ugen-nomask-optimize":{"name":"無遮罩單層量化（原件僅本機）","href":"sources.html#source-ugen-nomask-optimize"},"ugen-nomask-optimize-guard":{"name":"無遮罩量化資源監測（原件僅本機）","href":"sources.html#source-ugen-nomask-optimize-guard"},"ugen-nomask-audit":{"name":"無遮罩 HN 靜態稽核（原件僅本機）","href":"sources.html#source-ugen-nomask-audit"},"ugen-nomask-compile-failure":{"name":"無遮罩首次編譯准入拒絕（原件僅本機）","href":"sources.html#source-ugen-nomask-compile-failure"},"ugen-nomask-compile-guard":{"name":"無遮罩首次編譯資源監測（原件僅本機）","href":"sources.html#source-ugen-nomask-compile-guard"},"ugen-nomask-compile":{"name":"無遮罩診斷 HEF 編譯（原件僅本機）","href":"sources.html#source-ugen-nomask-compile"},"ugen-nomask-compile-retry-guard":{"name":"無遮罩重試資源監測（原件僅本機）","href":"sources.html#source-ugen-nomask-compile-retry-guard"},"ugen-nomask-static":{"name":"無遮罩 HEF 靜態解析（原件僅本機）","href":"sources.html#source-ugen-nomask-static"},"ugen-nomask-device":{"name":"無遮罩 UGen 推論（原件僅本機）","href":"sources.html#source-ugen-nomask-device"},"ugen-nomask-comparison":{"name":"無遮罩 CPU / NPU 數值比較（原件僅本機）","href":"sources.html#source-ugen-nomask-comparison"},"ugen-hef-helper-audit":{"name":"讀檔 helper 唯讀核對（原件僅本機）","href":"sources.html#source-ugen-hef-helper-audit"},"ugen-alternating-reference":{"name":"交錯遮罩 CPU 參考（原件僅本機）","href":"sources.html#source-ugen-alternating-reference"},"ugen-alternating-guard":{"name":"交錯遮罩 CPU 參考資源監測（原件僅本機）","href":"sources.html#source-ugen-alternating-guard"},"ugen-split-inventory":{"name":"前處理切點依賴盤點（原件僅本機）","href":"sources.html#source-ugen-split-inventory"},"ugen-split-result":{"name":"前處理與 encoder 切分圖收據（原件僅本機）","href":"sources.html#source-ugen-split-result"},"ugen-split-guard":{"name":"切分圖資源監測（原件僅本機）","href":"sources.html#source-ugen-split-guard"},"ugen-split-parity-full":{"name":"切分圖完整窗 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-split-parity-full"},"ugen-split-parity-near":{"name":"切分圖近場 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-split-parity-near"},"ugen-split-parity-english":{"name":"切分圖英文尾窗 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-split-parity-english"},"ugen-split-parity-short":{"name":"切分圖極短尾窗 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-split-parity-short"},"ugen-split-parity-full-guard":{"name":"完整窗對照資源監測（原件僅本機）","href":"sources.html#source-ugen-split-parity-full-guard"},"ugen-split-parity-near-guard":{"name":"近場對照資源監測（原件僅本機）","href":"sources.html#source-ugen-split-parity-near-guard"},"ugen-split-parity-english-guard":{"name":"英文尾窗對照資源監測（原件僅本機）","href":"sources.html#source-ugen-split-parity-english-guard"},"ugen-split-parity-short-guard":{"name":"極短尾窗對照資源監測（原件僅本機）","href":"sources.html#source-ugen-split-parity-short-guard"},"ugen-split-parity-stopped":{"name":"切分圖首次護欄中止（原件僅本機）","href":"sources.html#source-ugen-split-parity-stopped"},"ugen-split-encoder-parse":{"name":"切分 encoder DFC 解析（原件僅本機）","href":"sources.html#source-ugen-split-encoder-parse"},"ugen-split-encoder-errors":{"name":"切分 encoder 錯誤紀錄（原件僅本機）","href":"sources.html#source-ugen-split-encoder-errors"},"ugen-split-encoder-guard":{"name":"切分 encoder 資源監測（原件僅本機）","href":"sources.html#source-ugen-split-encoder-guard"},"ugen-split-host-session":{"name":"主機工作階段（原件僅本機）","href":"sources.html#source-ugen-split-host-session"},"ugen-split-restored-readback":{"name":"恢復後獨立讀回（原件僅本機）","href":"sources.html#source-ugen-split-restored-readback"},"ugen-public-model-catalog":{"name":"公開模型目錄搜尋收據（原件僅本機）","href":"sources.html#source-ugen-public-model-catalog"},"ugen-public-model-catalog-raw":{"name":"公開模型目錄原始回應（原件僅本機）","href":"sources.html#source-ugen-public-model-catalog-raw"},"ugen-public-model-verification":{"name":"公開模型目錄範圍核對（原件僅本機）","href":"sources.html#source-ugen-public-model-verification"},"ugen-penalty-cpu":{"name":"加性遮罩單層 CPU 對照（原件僅本機）","href":"sources.html#source-ugen-penalty-cpu"},"ugen-penalty-guard":{"name":"加性遮罩 CPU 資源監測（原件僅本機）","href":"sources.html#source-ugen-penalty-guard"},"ugen-penalty-preflight":{"name":"首次主機准入收據（原件僅本機）","href":"sources.html#source-ugen-penalty-preflight"},"ugen-penalty-attempt":{"name":"第二次主機准入收據（原件僅本機）","href":"sources.html#source-ugen-penalty-attempt"},"ugen-penalty-parse":{"name":"加性遮罩 DFC 契約檢查（原件僅本機）","href":"sources.html#source-ugen-penalty-parse"},"ugen-penalty-hn":{"name":"加性遮罩 HN（原件僅本機）","href":"sources.html#source-ugen-penalty-hn"},"ugen-penalty-repeat-audit":{"name":"遮罩 repeat 條件推演（原件僅本機）","href":"sources.html#source-ugen-penalty-repeat-audit"},"ugen-penalty-parse-guard":{"name":"加性遮罩解析資源監測（原件僅本機）","href":"sources.html#source-ugen-penalty-parse-guard"},"ugen-qkv-fixture":{"name":"QKV 合成測例結果（原件僅本機）","href":"sources.html#source-ugen-qkv-fixture"},"ugen-qkv-fixture-guard":{"name":"QKV 測例資源監測（原件僅本機）","href":"sources.html#source-ugen-qkv-fixture-guard"},"ugen-qkv-fixture-error":{"name":"QKV 斷言錯誤（原件僅本機）","href":"sources.html#source-ugen-qkv-fixture-error"},"ugen-qkv-diagnostic":{"name":"QKV 浮點差異診斷（原件僅本機）","href":"sources.html#source-ugen-qkv-diagnostic"},"ugen-qkv-diagnostic-guard":{"name":"QKV 診斷資源監測（原件僅本機）","href":"sources.html#source-ugen-qkv-diagnostic-guard"},"ugen-qkv-diagnostic-manifest":{"name":"QKV 遠端檔案清單（原件僅本機）","href":"sources.html#source-ugen-qkv-diagnostic-manifest"},"ugen-compact-head-cpu":{"name":"compact head-mask CPU 對照（原件僅本機）","href":"sources.html#source-ugen-compact-head-cpu"},"ugen-compact-head-guard":{"name":"compact head-mask 資源監測（原件僅本機）","href":"sources.html#source-ugen-compact-head-guard"},"live":{"name":"即時會議研究結果（原件僅本機）","href":"sources.html#source-live"},"demo":{"name":"Windows DEMO 使用與限制（原件僅本機）","href":"sources.html#source-demo"},"translation":{"name":"翻譯模型探索與連續負載報告（原件僅本機）","href":"sources.html#source-translation"},"translation-supplement":{"name":"三個候選模型的 12 案探索（原件僅本機）","href":"sources.html#source-translation-supplement"},"translation-progress":{"name":"六模型同題評測進度（原件僅本機）","href":"sources.html#source-translation-progress"},"translation-v2":{"name":"翻譯模型同題比較 / 暖機規則 v2（原件僅本機）","href":"sources.html#source-translation-v2"},"translation-chart":{"name":"翻譯品質、速度與積壓圖表","href":"https://papple23g.github.io/ugen300-translation-report/"},"blind":{"name":"受控翻譯與封存盲測（原件僅本機）","href":"sources.html#source-blind"},"summary":{"name":"會後摘要探索（原件僅本機）","href":"sources.html#source-summary"},"natural":{"name":"自然會議資料與摘要驗收條件（原件僅本機）","href":"sources.html#source-natural"},"usb":{"name":"IFP 與 UGen 連線盤點（原件僅本機）","href":"sources.html#source-usb"},"vendor":{"name":"Android USB 與供應商重現條件（原件僅本機）","href":"sources.html#source-vendor"},"closure":{"name":"長回放與既有整合驗證（原件僅本機）","href":"sources.html#source-closure"}},"groups":[{"id":"speech","heading":"語音辨識","kind":"support","icon":"speech","description":"聽清楚，並比較可用的辨識路線。"},{"id":"translation","heading":"字幕與翻譯","kind":"support","icon":"translation","description":"看得到原文，也要讓譯文可信且跟得上。"},{"id":"summary","heading":"會後摘要","kind":"support","icon":"summary","description":"整理重點，同時保留可查證的事實。"},{"id":"connection","heading":"設備連線","kind":"support","icon":"connection","description":"讓 IFP 與 UGen 在目標環境協作。"},{"id":"acceptance","heading":"實際會議驗收","kind":"support","icon":"acceptance","description":"用新會議、實際收音與畫面驗證整套流程。"}],"highlights":{"done":["comparison","zh-display","translation-evaluation"],"active":["stt-demo-ifp","farfield","translation-load"],"next":["stt-demo-ifp","farfield","translation-blind","natural-data"]},"nodes":[{"id":"comparison","group":"speech","icon":"speech","title":"建立八案比較基準","workStatus":"done","summary":"已用共同口徑整理八案的辨識品質與速度。","implementation":{"state":"verified","status":"既有八案比較已整理"},"acceptance":{"state":"limited","status":"這是研究比較，不是產品驗收"},"environment":"IFP CPU、IFP NPU 與 UGen NPU；固定八案和共同計時。","result":"截至 10/30，39 個配置列有經核對的完整八案品質與共同 RTF；部分歷史列共用同一組實測。未完整配置仍保留缺口。IFP CPU 的 Nemotron 3.5 Q8 / 2 GiB 已完成八案，近場 / 遠場 / 英文 / 混語錯誤率為 33.33% / 21.86% / 16.43% / 6.38%，四情境等權平均 19.50%；共同計時 248.027 秒 / 原音 253.368 秒，RTF 為 0.979。","next":"新配置有完整證據時，依相同口徑加入比較。","condition":"不同模型與計時範圍須維持可追溯。Nemotron 八案各為單次量測，不能估計波動；共同計時不可與歷史 API 計時混用。","effort":"尚無核定工時。","dependsOn":[],"sources":["overview","stt","nemo-2g-scores"],"todos":[{"text":"固定八案品質與共同計時口徑","state":"done","source":"overview"},{"text":"整理已完整的配置與原件","state":"done","source":"stt"},{"text":"完成 Nemotron 3.5 / 2 GiB 八案評分與共同計時","state":"done","source":"nemo-2g-scores"}]},{"id":"stt-demo-ifp","group":"speech","icon":"speech","title":"驗證 DEMO 的 IFP 語音路由","workStatus":"active","summary":"Nemotron 的裝置 bridge 已取得完整窗文字，短尾段仍待釐清。","implementation":{"state":"limited","status":"短音訊 bridge 完整窗已實測"},"acceptance":{"state":"limited","status":"短尾段與瀏覽器流程尚待驗證"},"environment":"Windows DEMO bridge / IFP CPU；已曝光的 17 秒英文樣本。","result":"Nemotron 3.5 Q8 的 15 秒完整窗有文字，2 秒尾段為空；使用者聽到的英文句子包含 3 個尾段參考詞型。帶前文的單案拼接候選減少兩套參考的刪字，但其中一套插入由 1 增至 2，未通過預定條件。","next":"研究可靠的詞界或保守候選顯示，驗證一般啟動的快取衝突、瀏覽器及實際收音。","condition":"單一已曝光音訊與兩套強制對齊邊界參考不能確認詞級時間、成因或產品準確率；插入數不等於已確認的重複詞。一般 DEMO 的快取處理在裝置鎖之前，本次短測另以已核對的同 SHA 快取避開覆寫。","effort":"尚無核定工時。","dependsOn":[],"sources":["demo","nemo-demo-smoke","nemo-tail-audit","nemo-tail-context","nemo-tail-reference","nemo-tail-order","nemo-tail-merge","listening-review"],"todos":[{"text":"驗證 Nemotron 裝置 bridge 完整窗","state":"done","source":"nemo-demo-smoke"},{"text":"核對短尾音訊與標註時間","state":"done","source":"nemo-tail-audit"},{"text":"完成短尾與前文脈絡對照","state":"done","source":"nemo-tail-context"},{"text":"完成尾段參考詞型匿名對照","state":"done","source":"nemo-tail-reference"},{"text":"聽音確認英文短尾並對照參考詞型","state":"done","source":"listening-review"},{"text":"核對反向窗序的匿名結果","state":"done","source":"nemo-tail-order"},{"text":"完成拼接候選的單案預註冊評分","state":"done","source":"nemo-tail-merge"},{"text":"改善短尾並驗證一般啟動的快取衝突","state":"open","source":"nemo-demo-smoke"},{"text":"驗證瀏覽器與實際收音","state":"open","source":"demo"}]},{"id":"farfield","group":"speech","icon":"speech","title":"改善遠場辨識品質","workStatus":"active","summary":"IFP 的研究基準已測，遠場中文仍略高於目標。","implementation":{"state":"limited","status":"已測基準，品質仍待改善"},"acceptance":{"state":"limited","status":"遠場研究門檻尚未達成"},"environment":"IFP CPU，SenseVoice 官方量化模型；已曝光八案。","result":"遠場中文錯誤率為 72/462（15.58%），仍高於 15% 的研究門檻。四個既有配方在兩案的共同刪字分別為 24/235 與 8/227；使用者在其中一個 5 秒片段聽到多人重疊。","next":"核對重疊內容與共同漏字的對應並提出具體改善，再用未參與調整的新資料驗證。","condition":"聽音結果適用整個 5 秒片段，不能定位到個別刪字或判定聲學成因；新資料須保有原音、人工參考文字與固定評分口徑。","effort":"尚無核定工時。","dependsOn":[],"sources":["ifp-scores","farfield-overlap","listening-review","requirements"],"todos":[{"text":"完成既有八案基準比較","state":"done","source":"ifp-scores"},{"text":"核對四配方的共同漏字索引","state":"done","source":"farfield-overlap"},{"text":"聽音確認遠場片段的講者重疊","state":"done","source":"listening-review"},{"text":"改善遠場漏字與分段","state":"open","source":"requirements"},{"text":"用新資料驗證候選品質","state":"open","source":"requirements"}]},{"id":"ugen-stt","group":"speech","icon":"speech","title":"篩選 UGen 語音路線","workStatus":"active","summary":"既有 Whisper 配方已完成八案，但辨識品質不合格。","implementation":{"state":"verified","status":"固定配方已測"},"acceptance":{"state":"limited","status":"受測配方品質未達標"},"environment":"UGen300 NPU，Whisper Base 的 2.5 秒分窗配方。","result":"八案共同 RTF 為 0.300，四情境等權平均錯誤率 102.24%；只能判定此配方，不能排除其他模型或 UGen 硬體。","next":"繼續以有根據的新模型或轉換方案尋找合格配置。","condition":"候選須取得目標硬體上的完整辨識與品質證據。","effort":"尚無核定工時。","dependsOn":[],"sources":["overview","stt","matrix"],"todos":[{"text":"完成 Whisper Base 八案測量","state":"done","source":"overview"},{"text":"取得品質合格的 UGen 辨識配置","state":"open","source":"matrix"}]},{"id":"ugen-sensevoice","group":"speech","icon":"speech","title":"移植 SenseVoice 到 UGen","workStatus":"paused","summary":"移植研究已暫停；單層 NPU 數值與 CPU 有差異，完整圖解析仍未通過。","implementation":{"state":"limited","status":"前置診斷完成，目標模型尚未部署"},"acceptance":{"state":"planned","status":"尚無 UGen 語音辨識結果"},"environment":"Hailo DFC 5.3.0 / HailoRT 5.3.2 / UGen NPU；四段既有音訊的 CPU 對照與合成輸入的注意力子圖。","result":"原 INT8 圖與移除動態 activation 量化的浮點圖，在四段真實音訊的原始 greedy ID 相同，但有效輸出 logits 相對 L2 差異為 2.87% 至 10.48%。固定遮罩圖補充 156 處形狀及改為 70 層加性遮罩後，各階段四段完整 logits 均與改動前逐位元相同。基準浮點圖四段的 70 層注意力分數 / softmax 均有限；三段有填充時，填充分數加 -10000 後與有效分數的最差差值約 -9812.97，完整窗無填充。無遮罩及加性遮罩的單層注意力子圖可解析並產生子圖 HAR；Where 遮罩版本解析失敗。無遮罩單層控制的 CPU 輸出與全有效遮罩逐位元相同，並已完成量化；HN 靜態稽核確認單一輸出、Q / K / V 支路及 grouped softmax 連結。首次編譯因容器可用記憶體略低於 2 GiB 護欄而拒絕，重試已產生單層診斷 HEF，並以 HailoRT 靜態解析輸入 / 輸出；兩次均未記錄 OOM。無遮罩合成輸入的 CPU / UGen 單層輸出 cosine 為 0.9711、相對 L2 誤差為 0.2410，仍有數值差異。僅保留 -10000 加性遮罩的單層候選，在四組合成輸入的 CPU 輸出與參考逐位元相同；有無效位置的測例，其各 head / query 的無效 key 機率均為 0。DFC 解析產生 12 層 HN，但遮罩 resize / repeat 未通過既定契約，未發布 HAR。以 SDK 規則條件推演，假設 score 為 head-major，4 個有效 key 的四組數量為 16 / 0 / 0 / 0 而非 4 / 4 / 4 / 4；全有效情況沒有此差異。compact head-mask 候選的四組共同遮罩與參考逐位元相同；四 head 非對稱遮罩亦與獨立 head-major ONNX 參考逐位元相同，交換 head 與旋轉 key 的負例產生差異。QKV 固定形狀的單層合成 CPU 測例，其逐位元一致斷言未通過，未記錄 OOM。後續新建合成圖四組輸出中，4 個有效位置逐位元相同；129 / 254 / 交錯遮罩的相對 L2 誤差約 0.00540 / 0.00426 / 0.00525。相同 Q / K / V 輸入的 reshape 單獨對照一致，第一個已觀測差異在上游 projection-output。加性遮罩完整圖 DFC 診斷記錄 495 筆錯誤，未產生完整 HAR。加性遮罩子圖首次量化因 normalization1 輸入形狀不符失敗；停用 ew_add_fusing 後使用 64 筆合成校準，子圖量化成功並編成 Hailo-10H 單層 HEF，兩階段未記錄 OOM。單層 HEF 靜態解析後，於 UGen NPU 以 4 / 129 / 254 個有效位置的合成遮罩各執行一次，輸出完整有限並釋放資源。與 CPU 單層子圖逐值比較，三組 cosine 相似度為 0.051 / 0.416 / 0.607，均方根誤差為 2.882 / 2.225 / 2.058。NPU 兩個較短遮罩的輸出等於全有效輸出將無效列填為正零，CPU 不符合此關係；轉換後 HN 將原始 key 遮罩映射並沿 1016 個特徵重複，與逐列遮罩觀察一致，支持遮罩軸可能有問題，但不能確定全部誤差原因。逐 key 遮罩候選的三組 CPU 合成對照逐位元相同；DFC 解析後分數張量相較原本膨脹約 254 倍，未通過既定形狀護欄，未進入量化或編譯。較小的 packed-key 遮罩候選三組 CPU 合成對照亦逐位元相同，但 DFC 在遮罩解包 reshape 報 UnsupportedShuffleLayerError，未產生 HAR 或進入量化與編譯。轉置遮罩候選三組 CPU 合成輸出逐位元相同，DFC 解析成功且分數張量未膨脹；但 HN 的 head / key 排列尚未證實，未通過既定嚴格契約。另一診斷路徑用 64 筆合成資料完成量化並編成單層 HEF；原始與量化 HN 稽核確認兩輸入、形狀有界及 softmax 至遮罩乘法的連結。HEF 已在本機完成 SHA 核對與 HailoRT 靜態解析；遮罩 VStream 為一維 [254]，與 HN rank 不同。轉置候選在 UGen 以 4 / 129 / 254 個有效位置及交錯遮罩共四組合成輸入測試，對照 CPU 的 cosine 相似度為 0.1610 / 0.3731 / 0.7225 / 0.2902，相對 L2 誤差為 1.0250 / 0.9900 / 0.6915 / 1.0030，差異仍明顯。依 CPU 的四個 128 通道區塊比較，四組 NPU 輸出各有至少兩個區塊全為 0，CPU 相同區塊並非全 0。只讀盤點顯示以組合特徵及三維遮罩為切點後，模型輸出不再依賴原輸入；已據此產生 CPU 前處理與 encoder 兩張 ONNX 圖，原始欄位位元組核對通過；四段既有語音切分前後的 CPU logits 全部 254 列逐位元相同。首次極短尾窗觸及 2.5 GiB 工作集護欄中止，改用較高上限後完成。切分 encoder 的 DFC 解析記錄 561 筆可能連鎖的錯誤，未產生 HAR，未記錄 OOM。2026-10-30 的 Hugging Face 公開模型 API 搜尋 SenseVoice，回傳 139 個模型，1,610 個檔名未出現 .hef 結尾或 hailo。尚無完整 SenseVoice HEF、UGen NPU 逐字稿或 RTF。","next":"若取得具體可行入口，先訂成本上限與停損條件，再評估是否恢復移植。","condition":"四段 CPU 對照和 70 層監測僅適用受測音訊，不能代表所有語音、逐字稿或辨識品質等價。合成輸入的單層 CPU / NPU 對照差異明顯，遮罩軸問題尚非已確認根因，轉置候選不通過嚴格契約也不能單獨證明 HN 映射有誤，head / key 對應仍未確立；四組 NPU 輸出量化端點占比均為 0%，不能據此推斷差異原因；以 CPU 為準的通道區塊不證明 NPU 內部 head 排列；轉置實機 runner 收據未記錄 HEF 間接讀檔 helper 的 SHA，不能證明當時載入的 helper 位元內容；無遮罩控制與僅保留加性遮罩候選皆為合成單層；後者尚未驗證 NPU 或完整圖，compact head-mask 也尚未驗證 Hailo 解析、NPU 數值或語音品質，HN 靜態檢查與 repeat 推演不能證明 ONNX / HN 的 head / key 對應或實機根因；前次 QKV 測例未保存差異大小、觸發遮罩或圖 SHA，無法證明後續診斷是同一圖；norm-output 尚未測，不能判定差異原因。後續完整輸出只列於遠端清單，尚未逐檔回收至本機；不同圖與量化條件無法單憑結果確認差異根因。HAR 尚未在本機重新讀取，不能僅憑遮罩 VStream 元素數判定與 HN 的對應；尚無數值合格門檻，不能推論完整模型或語音品質；四段切分對照只涵蓋 CPU 輸出，不能代表語音品質；切分圖尚未通過 DFC 解析。公開目錄結果不涵蓋其他搜尋、私有模型、datasets、spaces 或站外來源，不能推論其他地方不存在；切分 encoder 的 561 筆、新圖的 495 筆及舊圖的 791 筆錯誤可能各自連鎖，不能視為獨立根因數或完整的不支援算子清單。","effort":"尚無核定工時。","dependsOn":[],"sources":["index","overview","ugen-parity","ugen-shapes","ugen-shape-parity","ugen-parse-timeout","ugen-recorded-errors","ugen-error-summary","ugen-speech-parity","ugen-metadata-parity","ugen-attention-prepare","ugen-attention-nomask","ugen-attention-where","ugen-attention-additive","ugen-additive-parity","ugen-monitor-full","ugen-monitor-near","ugen-monitor-english","ugen-monitor-short","ugen-additive-dfc","ugen-attention-opt","ugen-attention-opt-guard","ugen-attention-nofuse-opt","ugen-attention-nofuse-compile","ugen-attention-nofuse-opt-guard","ugen-attention-nofuse-compile-guard","ugen-attention-static-hef","ugen-attention-device","ugen-attention-cpu-reference","ugen-attention-cpu-guard","ugen-attention-numeric-comparison","ugen-attention-row-analysis","ugen-attention-hn-mask","ugen-per-key-prepare","ugen-per-key-parse","ugen-per-key-prepare-guard","ugen-per-key-parse-guard","ugen-packed-key-prepare","ugen-packed-key-parse","ugen-packed-key-prepare-guard","ugen-packed-key-parse-guard","ugen-transposed-key-prepare","ugen-transposed-key-parse","ugen-transposed-key-prepare-guard","ugen-transposed-key-parse-guard","ugen-transposed-diagnostic-optimize","ugen-transposed-diagnostic-compile","ugen-transposed-diagnostic-optimize-guard","ugen-transposed-diagnostic-compile-guard","ugen-transposed-diagnostic-audit","ugen-transposed-static-hef","ugen-transposed-device","ugen-transposed-comparison","ugen-transposed-block-analysis","ugen-nomask-cpu","ugen-nomask-cpu-guard","ugen-nomask-optimize","ugen-nomask-optimize-guard","ugen-nomask-audit","ugen-nomask-compile-failure","ugen-nomask-compile-guard","ugen-nomask-compile","ugen-nomask-compile-retry-guard","ugen-nomask-static","ugen-nomask-device","ugen-nomask-comparison","ugen-hef-helper-audit","ugen-alternating-reference","ugen-alternating-guard","ugen-split-inventory","ugen-split-result","ugen-split-guard","ugen-split-parity-full","ugen-split-parity-near","ugen-split-parity-english","ugen-split-parity-short","ugen-split-parity-full-guard","ugen-split-parity-near-guard","ugen-split-parity-english-guard","ugen-split-parity-short-guard","ugen-split-parity-stopped","ugen-split-encoder-parse","ugen-split-encoder-errors","ugen-split-encoder-guard","ugen-split-host-session","ugen-split-restored-readback","ugen-public-model-catalog","ugen-public-model-catalog-raw","ugen-public-model-verification","ugen-penalty-cpu","ugen-penalty-guard","ugen-penalty-preflight","ugen-penalty-attempt","ugen-penalty-parse","ugen-penalty-hn","ugen-penalty-repeat-audit","ugen-penalty-parse-guard","ugen-qkv-fixture","ugen-qkv-fixture-guard","ugen-qkv-fixture-error","ugen-qkv-diagnostic","ugen-qkv-diagnostic-guard","ugen-qkv-diagnostic-manifest","ugen-compact-head-cpu","ugen-compact-head-guard"],"todos":[{"text":"驗證控制模型可解析","state":"done","source":"overview"},{"text":"完成補充形狀前後的 CPU 對照","state":"done","source":"ugen-shape-parity"},{"text":"記錄固定 250 格實驗圖的 DFC 解析錯誤","state":"done","source":"ugen-recorded-errors"},{"text":"完成四段真實音訊的 CPU 對照","state":"done","source":"ugen-speech-parity"},{"text":"對照補充形狀後的四段 CPU 輸出","state":"done","source":"ugen-metadata-parity"},{"text":"檢查三種注意力子圖的解析","state":"done","source":"ugen-attention-additive"},{"text":"整合加性遮罩並對照四段 CPU 輸出","state":"done","source":"ugen-additive-parity"},{"text":"監測四段的 70 層注意力輸出","state":"done","source":"ugen-monitor-short"},{"text":"停用融合並完成單層量化","state":"done","source":"ugen-attention-nofuse-opt"},{"text":"編譯單層 HEF","state":"done","source":"ugen-attention-nofuse-compile"},{"text":"執行單層合成輸入 UGen 推論","state":"done","source":"ugen-attention-device"},{"text":"盤點前處理切點與輸出依賴","state":"done","source":"ugen-split-inventory"},{"text":"產生前處理與 encoder 切分圖","state":"done","source":"ugen-split-result"},{"text":"核對單層 CPU 與 NPU 數值","state":"done","source":"ugen-attention-numeric-comparison"},{"text":"檢查單層遮罩輸出列關係","state":"done","source":"ugen-attention-row-analysis"},{"text":"檢查逐 key 遮罩候選的 HN 形狀","state":"done","source":"ugen-per-key-parse"},{"text":"檢查 packed-key 遮罩候選的 DFC 解析","state":"done","source":"ugen-packed-key-parse"},{"text":"檢查轉置遮罩候選的 HN 形狀","state":"done","source":"ugen-transposed-key-parse"},{"text":"編譯轉置遮罩單層診斷 HEF","state":"done","source":"ugen-transposed-diagnostic-compile"},{"text":"稽核轉置候選量化前後 HN 的形狀與連結","state":"done","source":"ugen-transposed-diagnostic-audit"},{"text":"解析轉置候選 HEF 的 HailoRT 格式","state":"done","source":"ugen-transposed-static-hef"},{"text":"對照轉置單層 NPU 與 CPU 合成輸出","state":"done","source":"ugen-transposed-comparison"},{"text":"檢查轉置輸出通道區塊","state":"done","source":"ugen-transposed-block-analysis"},{"text":"對照無遮罩單層 CPU 並稽核 HN","state":"done","source":"ugen-nomask-audit"},{"text":"完成無遮罩單層 HEF 編譯及靜態解析","state":"done","source":"ugen-nomask-static"},{"text":"對照無遮罩單層 CPU / NPU 數值","state":"done","source":"ugen-nomask-comparison"},{"text":"對照僅保留加性遮罩的單層 CPU 輸出","state":"done","source":"ugen-penalty-cpu"},{"text":"檢查加性遮罩單層 DFC 契約","state":"done","source":"ugen-penalty-parse"},{"text":"對照 compact head-mask 單層 CPU","state":"done","source":"ugen-compact-head-cpu"},{"text":"診斷 QKV 合成測例失敗","state":"open","source":"ugen-qkv-fixture"},{"text":"驗證轉置遮罩的 head / key 對應","state":"open","source":"ugen-transposed-key-parse"},{"text":"釐清單層 CPU / NPU 數值差異","state":"open","source":"ugen-attention-numeric-comparison"},{"text":"對照切分圖的 CPU 語音輸出","state":"done","source":"ugen-split-parity-full"},{"text":"記錄切分 encoder 解析錯誤","state":"done","source":"ugen-split-encoder-errors"},{"text":"排除切分 encoder 解析錯誤","state":"open","source":"ugen-split-encoder-parse"},{"text":"排除完整圖解析錯誤","state":"open","source":"ugen-additive-dfc"},{"text":"驗證停用融合對完整圖量化的適用性","state":"open","source":"ugen-attention-opt"},{"text":"取得完整產物並驗證 UGen 辨識","state":"open","source":"overview"}]},{"id":"zh-display","group":"translation","icon":"translation","title":"顯示繁體中文字幕","workStatus":"done","summary":"繁中字形轉換已接入 DEMO，並保留原始辨識文字。","implementation":{"state":"verified","status":"Windows DEMO 功能已回讀"},"acceptance":{"state":"limited","status":"不代表辨識品質或 IFP 驗收"},"environment":"Windows DEMO；兩個語音辨識模型的開發案例。","result":"字形例 8/8、兩個模型的 47 段顯示回讀均符合轉換；原始辨識文字保留。","next":"在自然收音與目標設備驗收時，繼續核對顯示及原文保護。","condition":"字形轉換與語音辨識正確率分開判斷。","effort":"尚無核定工時。","dependsOn":[],"sources":["live","demo"],"todos":[{"text":"驗證繁中字形轉換","state":"done","source":"live"},{"text":"接入 DEMO 並回讀原文與顯示","state":"done","source":"live"}]},{"id":"translation-demo","group":"translation","icon":"translation","title":"接上逐段翻譯功能","workStatus":"done","summary":"Windows DEMO 已提供原文與譯文對照，翻譯預設關閉。","implementation":{"state":"verified","status":"實驗性功能已接入"},"acceptance":{"state":"limited","status":"翻譯品質與整機尚未驗收"},"environment":"Windows DEMO 與 UGen 翻譯服務。","result":"選單列出六個模型與繁中或英文目標，保留原始 STT；可用性依本機模型檔判定，檔案存在不代表推論已驗證。品質與延遲限制仍需人工注意。","next":"保留原文，並以品質與實際畫面延遲的驗收結果決定後續採用。","condition":"開關或顯示成功不等於譯文忠實。","effort":"尚無核定工時。","dependsOn":[],"sources":["demo","overview"],"todos":[{"text":"接入逐段翻譯與模型選擇","state":"done","source":"demo"},{"text":"保留原文並顯示譯文","state":"done","source":"demo"}]},{"id":"translation-evaluation","group":"translation","icon":"translation","title":"比較三個翻譯模型","workStatus":"done","summary":"受控文字評測已完成，部分品質判讀仍未確定。","implementation":{"state":"verified","status":"三輪評測與結果整理已完成"},"acceptance":{"state":"limited","status":"未人工複核，不能視為產品驗收"},"environment":"Windows / UGen；60 個合成來源、三模型各重複三次。","result":"540/540 次請求均收到 API 終止訊號；品質由 LLM 判讀，部分案例未判定，不能據此宣稱正式排名或譯文全部正確。","next":"釐清未判定案例並以獨立人工核對品質。","condition":"API 終止不等於譯文正確，重複次數不等於獨立來源數。","effort":"尚無核定工時。","dependsOn":[],"sources":["translation","translation-chart"],"todos":[{"text":"完成三模型三輪 API 測試","state":"done","source":"translation"},{"text":"整理品質與有效速度的探索結果","state":"done","source":"translation"}]},{"id":"translation-supplement","group":"translation","icon":"translation","title":"補測其他翻譯模型","workStatus":"done","summary":"三模型同題三輪、LLM 盲評與持續負載均已完成。","implementation":{"state":"verified","status":"同題與持續負載研究已完成"},"acceptance":{"state":"limited","status":"資料已曝光且未人工複核，不能視為驗收"},"environment":"Windows / UGen；Qwen2、DeepSeek-R1 與 Qwen2.5-Coder 以相同 60 個合成來源各測三輪。","result":"三模型共 540 次正式呼叫；DeepSeek 截斷 123/180，Qwen2 與 Qwen2.5-Coder 均為 0/180。第 10 分鐘 DeepSeek 有 103 段未終止，另兩模型均為 0；Qwen2 有 20 段未符合繁中輸出要求。","next":"以未曝光的自然會議資料及實際畫面驗證品質與延遲。","condition":"API 終止不保證譯文完整；LLM 品質評分尚未人工複核。","effort":"尚無核定工時。","dependsOn":[],"sources":["translation-supplement","translation","translation-v2","translation-progress"],"todos":[{"text":"完成三模型 12 案探索與匿名判讀","state":"done","source":"translation-supplement"},{"text":"決定截斷暖機與批次規則","state":"done","source":"translation-v2"},{"text":"完成三模型同題三輪測試與盲評","state":"done","source":"translation-progress"},{"text":"完成三模型持續輸入與排空測試","state":"done","source":"translation-progress"}]},{"id":"translation-blind","group":"translation","icon":"translation","title":"Qwen3 盲測配方","workStatus":"paused","summary":"Qwen3 的固定盲測配方未達門檻，該配方暫停。","implementation":{"state":"verified","status":"封存 30 案盲測已完成"},"acceptance":{"state":"limited","status":"固定配方未通過盲測門檻"},"environment":"UGen / Qwen3 1.7B；先凍結的 30 個受控文字案例。","result":"顯示的重大錯誤為 3、顯示 20/30、8 秒內 16/30，三項門檻未過。這只適用受測配方，不代表所有模型或方法都不可行。","next":"有具體新機制時，使用全新隔離資料重新設計驗證。","condition":"原 30 案已使用，不能調參後再次冒充封存盲測。","effort":"尚無核定工時。","dependsOn":[],"sources":["blind","index"],"todos":[{"text":"凍結並執行 30 案盲測","state":"done","source":"blind"},{"text":"保留未過門檻與錯誤案例","state":"done","source":"blind"},{"text":"準備新機制與全新隔離驗收集","state":"open","source":"index"}]},{"id":"translation-load","group":"translation","icon":"translation","title":"確認翻譯能否跟上","workStatus":"active","summary":"六模型受控連續輸入已測，Qwen3 與 DeepSeek 出現積壓。","implementation":{"state":"verified","status":"10 分鐘受控負載已測"},"acceptance":{"state":"limited","status":"自然會議與畫面延遲未驗"},"environment":"Windows / UGen；每 5 秒輸入一段，連續 10 分鐘。","result":"停止輸入時，Qwen3 有 36 段未終止並排空 244.74 秒；DeepSeek 有 103 段未終止並排空 3378.67 秒。Qwen2 與 Qwen2.5-Coder 均為 0 段；Qwen2 有 20 段未符合繁中輸出要求。這不是說話到畫面的延遲。","next":"以自然會議輸入、實際畫面與整機負載確認延遲及積壓。","condition":"不同段落長度與到達頻率會改變結果。","effort":"尚無核定工時。","dependsOn":[],"sources":["translation","translation-chart","translation-progress","requirements"],"todos":[{"text":"完成六模型 10 分鐘受控負載與排空","state":"done","source":"translation-progress"},{"text":"量測自然語音與畫面的端到端延遲","state":"open","source":"requirements"},{"text":"驗證目標整機的長時間表現","state":"open","source":"requirements"}]},{"id":"summary-candidate","group":"summary","icon":"summary","title":"取得可信摘要候選","workStatus":"planned","summary":"既有探索尚無可直接自動採用的改寫摘要。","implementation":{"state":"verified","status":"既有探索與原始輸出已保存"},"acceptance":{"state":"limited","status":"摘要事實與格式尚未通過"},"environment":"既有受控文字與 Qwen3 摘要探索。","result":"固定五欄曾只輸出欄名，濃縮稿也有事實或時間關係錯誤；保留原文與摘錄核對。","next":"尋找能保留事實、格式與來源的摘要候選。","condition":"不能把原文摘錄稱為合格改寫摘要，也不能將單批失敗推及全部模型。","effort":"尚無核定工時。","dependsOn":[],"sources":["summary","overview"],"todos":[{"text":"完成既有摘要方法探索","state":"done","source":"summary"},{"text":"取得保留事實與來源的候選","state":"open","source":"summary"}]},{"id":"summary-validation","group":"summary","icon":"summary","title":"驗證完整會後摘要","workStatus":"planned","summary":"摘要驗收條件已列出，完整自然會議仍待驗。","implementation":{"state":"verified","status":"已整理摘要資料與評分條件"},"acceptance":{"state":"planned","status":"完整自然會議摘要尚未驗收"},"environment":"會議停止排空後的完整快照與人工事實參考。","result":"評分要求檢查決議、行動、負責人與日期，並核對主題覆蓋；60 分鐘會議的研究上限為 10 分鐘完成。","next":"準備隔離會議資料與合格候選，再核對摘要事實及完成時間。","condition":"人工參考不能混入模型輸入；首字輸出不代表摘要完成。","effort":"尚無核定工時。","dependsOn":["summary-candidate"],"sources":["natural","requirements"],"todos":[{"text":"整理摘要事實與時間驗收條件","state":"done","source":"natural"},{"text":"取得隔離的完整會議與人工參考","state":"open","source":"natural"},{"text":"核對完整摘要事實與完成時間","state":"open","source":"requirements"}]},{"id":"ifp-usb","group":"connection","icon":"connection","title":"讓 IFP 看見 UGen","workStatus":"planned","summary":"既有 IFP 裝置盤點未列出 UGen，需再確認目標連線。","implementation":{"state":"limited","status":"已有歷史 USB 盤點"},"acceptance":{"state":"planned","status":"IFP 與 UGen 的目標連線未驗通"},"environment":"IFP Android 主機與 UGen USB；既有盤點為 10/08 快照。","result":"當時 Android 主機清單未列出 UGen；供電、資料埠與實際 USB 鏈路仍需在目標條件下確認。","next":"確認接入主機資料埠後，對照裝置枚舉與供電狀態。","condition":"歷史清單不能當作目前即時裝置狀態。","effort":"尚無核定工時。","dependsOn":[],"sources":["usb","vendor"],"todos":[{"text":"完成既有 IFP USB 清單盤點","state":"done","source":"usb"},{"text":"確認 UGen 在目標主機的枚舉","state":"open","source":"usb"},{"text":"核對實體連接、資料路由與供電","state":"open","source":"vendor"}]},{"id":"android-runtime","group":"connection","icon":"connection","title":"接通 Android 推論環境","workStatus":"planned","summary":"相容版本與載入條件已整理，目標推論尚未驗證。","implementation":{"state":"limited","status":"已整理設備與供應商待確認項"},"acceptance":{"state":"planned","status":"Android / UGen 推論尚未驗通"},"environment":"IFP Android 15 / arm64，UGen300 與 Hailo-10H USB。","result":"SDK、USB 權限、載入器、HailoRT 與模型相容性需要在目標設備逐步確認。","next":"取得相容依據，依序驗證 USB 權限、載入器、HailoRT 與模型推論。","condition":"Windows 的 UGen 推論成功不能代替 IFP Android 驗收。","effort":"尚無核定工時。","dependsOn":[],"sources":["vendor","usb"],"todos":[{"text":"整理 SDK 與目標環境待確認項","state":"done","source":"vendor"},{"text":"確認相容版本與 USB 權限","state":"open","source":"vendor"},{"text":"驗證載入器、HailoRT 與目標推論","state":"open","source":"vendor"}]},{"id":"natural-data","group":"acceptance","icon":"acceptance","title":"準備新自然會議","workStatus":"planned","summary":"可見英文長會議已曝光，其他候選仍有條件待確認。","implementation":{"state":"limited","status":"已盤點可見資料，未涵蓋其他位置"},"acceptance":{"state":"planned","status":"新自然會議資料與標註尚未齊備"},"environment":"本輪中、英、混語各一場，各至少 60 分鐘。","result":"既有三場英文長會議已作研究回放，不能當作未曝光驗收資料；另有候選錄音的表頭長度超出實檔，使用權與人工參考仍未知。","next":"核對候選來源與使用權，準備具完整人工參考且未曝光的三場會議。","condition":"10/27 的 0/3 是歷史快照；本輪僅盤點可見範圍，未知不計為有或無。","effort":"尚無核定工時。","dependsOn":[],"sources":["natural","natural-audit-20261101","requirements"],"todos":[{"text":"盤點既有資料與曝光狀態","state":"done","source":"natural"},{"text":"盤點可見候選表頭及未確認條件","state":"done","source":"natural-audit-20261101"},{"text":"準備隔離的中、英、混語長會議","state":"open","source":"natural"},{"text":"完成逐字稿與摘要事實參考","state":"open","source":"natural"}]},{"id":"visible-latency","group":"acceptance","icon":"acceptance","title":"量測實際畫面延遲","workStatus":"planned","summary":"已有 API 與字幕事件證據，實際句尾到畫面仍待驗。","implementation":{"state":"limited","status":"歷史供音與字幕事件已有收據"},"acceptance":{"state":"planned","status":"實際收音與畫面延遲尚未驗收"},"environment":"目標設備的麥克風、字幕與逐段翻譯畫面。","result":"研究門檻為人工確認句尾到完整字幕 p95 不超過 3 秒、完整段落譯文 p95 不超過 8 秒；API 計時不能替代。","next":"用實際收音及畫面對時量測字幕與譯文延遲。","condition":"正式 2 秒需求的起訖與統計口徑仍須另外釐清。","effort":"尚無核定工時。","dependsOn":[],"sources":["closure","requirements"],"todos":[{"text":"驗證歷史供音、字幕事件與排空","state":"done","source":"closure"},{"text":"建立人工句尾與畫面對時","state":"open","source":"requirements"},{"text":"量測字幕與翻譯的端到端延遲","state":"open","source":"requirements"}]},{"id":"product-acceptance","group":"acceptance","icon":"acceptance","title":"完成整機會議驗收","workStatus":"planned","summary":"長音回放已有研究證據，整套自然會議仍未驗收。","implementation":{"state":"limited","status":"已有長回放與部分功能證據"},"acceptance":{"state":"planned","status":"實際會議與整機驗收尚未完成"},"environment":"IFP + UGen，實際收音、畫面與完整會議流程。","result":"歷史長回放不等於包含自然收音、翻譯、畫面、故障恢復與人工版本保護的產品驗收。","next":"在候選與資料就緒後，驗證實際會議、停止排空及故障恢復。","condition":"各研究門檻與正式產品要求分開確認。","effort":"尚無核定工時。","dependsOn":[],"sources":["closure","natural","requirements"],"todos":[{"text":"保存既有長回放與功能證據","state":"done","source":"closure"},{"text":"完成自然會議與真實收音驗證","state":"open","source":"natural"},{"text":"驗證整機恢復及人工版本保護","state":"open","source":"requirements"}]},{"id":"formal-requirements","group":"acceptance","icon":"acceptance","title":"釐清正式產品要求","workStatus":"planned","summary":"研究門檻已列出，正式語言清單與計時口徑仍待確認。","implementation":{"state":"limited","status":"已盤點正式需求原文與缺口"},"acceptance":{"state":"planned","status":"正式驗收契約尚未完整確認"},"environment":"需求負責人、產品規格與目標設備。","result":"正式 27 語言清單及 2 秒要求的起訖、部分或完整結果與百分位仍待對齊；研究 3 秒／8 秒門檻不能替代。","next":"與需求負責人確認語言範圍與延遲計時契約。","condition":"未確認的規格維持未知，不自行放寬。","effort":"尚無核定工時。","dependsOn":[],"sources":["requirements"],"todos":[{"text":"整理既有需求與研究門檻","state":"done","source":"requirements"},{"text":"確認正式語言清單","state":"open","source":"requirements"},{"text":"確認 2 秒需求的計時與統計方式","state":"open","source":"requirements"}]}],"snapshot":{"asOf":"2026-10-31T20:04:43.915Z","facts":{"研究分支":5,"研究節點":19},"sources":["overview","index"]}}</script>
+<script>
+'use strict';
+const data = JSON.parse(document.getElementById('dashboard-data').textContent);
+const nodes = new Map(data.nodes.map(node => [node.id, node]));
+const buttons = new Map();
+const dialog = document.getElementById('detail-dialog');
+const labels = {done:'工作已完成',active:'進行中',planned:'待處理',paused:'暫停',blocked:'等待條件'};
+const todoLabels = {done:'已完成',open:'待辦',paused:'暫停',blocked:'等待'};
+function el(tag, className, text) {
+  const item = document.createElement(tag);
+  if (className) item.className = className;
+  if (text !== undefined) item.textContent = text;
+  return item;
+}
+function makeIcon(name) {
+  const frame = el('span','icon-frame');
+  frame.setAttribute('aria-hidden','true');
+  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  const use = document.createElementNS('http://www.w3.org/2000/svg','use');
+  use.setAttribute('href','#icon-' + name);
+  svg.append(use);
+  frame.append(svg);
+  return frame;
+}
+function addBlock(container, title, content) {
+  const section = el('section','detail-block');
+  section.append(el('h3','',title));
+  if (typeof content === 'string') section.append(el('p','',content));
+  else section.append(content);
+  container.append(section);
+}
+function openDetail(node, trigger) {
+  document.getElementById('detail-title').textContent = node.title;
+  document.getElementById('detail-summary').textContent = node.summary;
+  const status = document.getElementById('detail-statuses');
+  status.replaceChildren(el('span','detail-pill','工作：' + labels[node.workStatus]),el('span','detail-pill','品質／驗收：' + node.acceptance.status));
+  const content = document.getElementById('detail-content');
+  content.replaceChildren();
+  addBlock(content,'已確認的結果',node.result);
+  addBlock(content,'下一步',node.next);
+  const tasks = el('ul','todo-list');
+  for (const todo of node.todos) {
+    const item = el('li','todo ' + todo.state);
+    item.append(el('span','todo-state',todoLabels[todo.state]),el('span','',todo.text));
+    tasks.append(item);
+  }
+  if (!node.todos.length) tasks.append(el('li','','工作項目尚待盤點。'));
+  addBlock(content,'工作清單',tasks);
+  addBlock(content,'適用範圍與限制',node.environment + ' ' + node.condition);
+  if (node.dependsOn.length) {
+    const dependencies = el('div');
+    for (const id of node.dependsOn) {
+      const link = el('button','dependency-button',nodes.get(id).title);
+      link.type = 'button';
+      link.addEventListener('click',() => {
+        dialog.close();
+        openDetail(nodes.get(id),buttons.get(id));
+      });
+      dependencies.append(link);
+    }
+    addBlock(content,'必要先決任務',dependencies);
+  }
+  const sources = el('ul','detail-sources');
+  for (const key of node.sources) {
+    const item = el('li');
+    const link = el('a','',data.sources[key].name);
+    link.href = data.sources[key].href;
+    item.append(link);
+    sources.append(item);
+  }
+  addBlock(content,'研究證據',sources);
+  if (!dialog.open) {
+    trigger.focus();
+    dialog.showModal();
+  }
+}
+function makeNode(node) {
+  const button = el('button','node');
+  button.type = 'button';
+  button.id = 'node-' + node.id;
+  button.dataset.nodeId = node.id;
+  button.dataset.status = node.workStatus;
+  button.setAttribute('aria-haspopup','dialog');
+  button.setAttribute('aria-controls','detail-dialog');
+  const body = el('span','node-body');
+  body.append(el('span','node-title',node.title),el('span','node-status',labels[node.workStatus]));
+  const wrap = el('span','progress-wrap');
+  if (node.todos.length) {
+    const completed = node.todos.filter(todo => todo.state === 'done').length;
+    const caption = el('span','progress-caption');
+    caption.append(el('span','','工作項'),el('span','',completed + ' / ' + node.todos.length));
+    const progress = document.createElement('progress');
+    progress.max = node.todos.length;
+    progress.value = completed;
+    progress.setAttribute('aria-label',node.title + '：已完成 ' + completed + ' 項，共列出 ' + node.todos.length + ' 項工作');
+    wrap.append(caption,progress);
+  } else wrap.append(el('span','empty-progress','工作項待盤點'));
+  body.append(wrap);
+  button.append(makeIcon(node.icon),body);
+  button.addEventListener('click',() => openDetail(node,button));
+  buttons.set(node.id,button);
+  return button;
+}
+const tree = document.getElementById('tree');
+data.groups.forEach((group,index) => {
+  const section = el('section','branch');
+  section.dataset.group = group.id;
+  const heading = el('div','branch-head');
+  const title = el('h3','',group.heading);
+  title.id = 'branch-' + group.id;
+  section.setAttribute('aria-labelledby',title.id);
+  heading.append(el('span','branch-index',String(index + 1).padStart(2,'0')),title);
+  const list = el('div','branch-nodes');
+  for (const node of data.nodes.filter(item => item.group === group.id)) list.append(makeNode(node));
+  section.append(heading,list);
+  tree.append(section);
+});
+for (const name of ['done','active','next']) {
+  const list = document.getElementById('summary-' + name);
+  for (const id of data.highlights[name]) {
+    const node = nodes.get(id);
+    const item = el('li');
+    const button = el('button','',name === 'next' ? node.next : node.title);
+    button.type = 'button';
+    button.addEventListener('click',() => openDetail(node,button));
+    item.append(button);
+    list.append(item);
+  }
+}
+const reviewedTime = document.getElementById('reviewed-at');
+reviewedTime.dateTime = data.snapshot.asOf;
+reviewedTime.textContent = new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date(data.snapshot.asOf)) + '（台灣時間）';
+document.documentElement.dataset.dashboardReady = 'true';
+if (location.hash.startsWith('#node-')) {
+  const target = buttons.get(location.hash.slice(6));
+  if (target) {
+    target.focus({preventScroll: true});
+    target.scrollIntoView({block: 'center', behavior: 'instant'});
+  }
+}
+</script>
+</body>
+</html>
