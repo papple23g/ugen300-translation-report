@@ -1,0 +1,1487 @@
+{
+  "schema": "translation-evaluation-summary-v1",
+  "stage": "formal_three_rounds_llm_exploratory_intervals",
+  "scope": "三輪推論完成；品質 / 忠實完整率 / 重大錯誤仍有未判定，不能宣稱正式單一分數或正式排名",
+  "sample_origin": "LLM 合成受控文字",
+  "sources_per_model": 60,
+  "repeats_per_source": 3,
+  "review": "獨立 Codex LLM 盲評，精確評審模型版本未知，未經人工複核",
+  "measure": "暖機後 API 首段 / 完成時間，非自然音訊句尾到畫面時間或產品驗收",
+  "data_complete": false,
+  "can_claim_formal_results": false,
+  "incomplete_reasons": [
+    "quality_score_undetermined",
+    "faithful_complete_percent_undetermined",
+    "critical_error_judgment_undetermined"
+  ],
+  "request_counts": {
+    "measured_planned": 540,
+    "measured_confirmed_sent": 540,
+    "measured_api_complete": 540,
+    "planned_warmups": 9,
+    "resume_warmups": 1,
+    "total_api_complete_including_warmups": 550,
+    "api_errors": 0,
+    "timeouts": 0,
+    "truncated_measured": 3
+  },
+  "repeated_failure_sources": {
+    "model": "llama3.2:1b",
+    "truncated": {
+      "requests": 3,
+      "independent_sources": 1
+    },
+    "wrong_language": {
+      "requests": 3,
+      "independent_sources": 1
+    },
+    "combined_independent_sources": 2,
+    "attribution": "匿名分組及交叉核對收據；來源識別與候選文字不公開"
+  },
+  "judgment": {
+    "unique_outputs_reviewed": 176,
+    "identical_judgments_reused": 176,
+    "quality_unknown_unique": 8,
+    "quality_unknown_unique_attribution": "以凍結 score_case 核對每個唯一盲評結果，收據雜湊見 source_receipts",
+    "quality_unknown_requests": 24,
+    "note": "相同輸出判讀共用；分母仍為各模型 180 次請求"
+  },
+  "paired_model_comparisons": {
+    "state": "unavailable",
+    "reasons": [
+      "quality_score_undetermined",
+      "faithful_complete_percent_undetermined",
+      "critical_error_judgment_undetermined"
+    ]
+  },
+  "source_receipts": [
+    {
+      "name": "formal-aggregate.json",
+      "sha256": "1393b956f30ea0f59fb8081284531f750c959494bc5ddf0d25bd0dcebf9b06fa"
+    },
+    {
+      "name": "receipt-check-final.json",
+      "sha256": "5981a3abbcf32f607d3f880c8d8865fbee44b0a660179e7e19c861439091a196"
+    },
+    {
+      "name": "reuse-receipt.json",
+      "sha256": "88a7dc6ad7649f8efea430d1fa43c6bd8ef720010f8d39748e5e8910c857a826"
+    },
+    {
+      "name": "failure-group-check.json",
+      "sha256": "e2857a840b88c1c785b849e79b47b20466170cdd380b5c1d1f99125ef72be9ee"
+    },
+    {
+      "name": "failure-group-cross-check.json",
+      "sha256": "f11fbcec7b1c09c7ba010cba410e25c6e3ee983e79d9c960de2d2ca2890fdff6"
+    },
+    {
+      "name": "repetition-check.json",
+      "sha256": "ad76195ae0ad6a02ac33161ba32f18fded1407de7e6fe089fa61c3a18e7775c8"
+    },
+    {
+      "name": "unique-uncertainty-check.json",
+      "sha256": "02d489e21ff2aacacfa85ed00688c37400003e1722f58a380f6a9287134da6b7"
+    },
+    {
+      "name": "non-resident-warmups.json",
+      "sha256": "d2da454420bcdccab8ae1bd435e029f656b269f916814b678a606a7174e66c40"
+    }
+  ],
+  "measurement_scope": "本模型比較直接呼叫 Hailo API，不要求啟動 DEMO 頁面；API 時間不等於語音到畫面延遲",
+  "models": {
+    "llama3.2:1b": {
+      "overall": {
+        "planned_measured": 180,
+        "confirmed_sent": 180,
+        "not_started": 0,
+        "send_unconfirmed": 0,
+        "valid_delivery_count": 174,
+        "invalid_delivery_count": 6,
+        "unknown_delivery_count": 0,
+        "quality_score": {
+          "denominator": 180,
+          "unknown": 9,
+          "lower": 48.75555555555555,
+          "upper": 53.75555555555555
+        },
+        "effective_speed_score": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 93.23191265555539,
+          "upper": 93.23191265555539
+        },
+        "faithful_complete_percent": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 15.0,
+          "upper": 15.0
+        },
+        "valid_delivery_percent": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 96.66666666666667,
+          "upper": 96.66666666666667
+        },
+        "valid_within_8_seconds_percent": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 95.0,
+          "upper": 95.0
+        },
+        "critical_errors": {
+          "confirmed_errors": 168,
+          "trials_with_confirmed_errors": 135,
+          "judged_complete": 165,
+          "not_fully_judged": 15,
+          "denominator": 180
+        },
+        "api_first_chunk": {
+          "unit": "seconds",
+          "all_count": 180,
+          "observed_count": 180,
+          "missing_count": 0,
+          "p50_all": 1.3218976000016482,
+          "p50_observed": 1.3218976000016482,
+          "p95_all": 1.334931700001107,
+          "p95_all_note": null,
+          "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+          "complete_reply_count": 177,
+          "p95_complete_reply": 1.334396400001424,
+          "maximum_observed": 1.3551936999992904,
+          "maximum_all": 1.3551936999992904
+        },
+        "api_completion": {
+          "unit": "seconds",
+          "all_count": 180,
+          "observed_count": 180,
+          "missing_count": 0,
+          "p50_all": 3.366824799999449,
+          "p50_observed": 3.366824799999449,
+          "p95_all": 4.633940800000346,
+          "p95_all_note": null,
+          "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+          "complete_reply_count": 177,
+          "p95_complete_reply": 4.595395899999858,
+          "maximum_observed": 34.05744460000278,
+          "maximum_all": 34.05744460000278
+        },
+        "failures_and_unknowns": {
+          "empty": 0,
+          "refusal": 0,
+          "wrong_language": 3,
+          "truncated": 3,
+          "timeout": 0,
+          "error": 0,
+          "unknown_truncation": 0,
+          "missing_judgment": 0,
+          "uncertain_judgment": 0
+        }
+      },
+      "directions": {
+        "en_to_zh": {
+          "planned_measured": 60,
+          "confirmed_sent": 60,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 54,
+          "invalid_delivery_count": 6,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 60,
+            "unknown": 6,
+            "lower": 30.75,
+            "upper": 40.75
+          },
+          "effective_speed_score": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 87.07902579999943,
+            "upper": 87.07902579999943
+          },
+          "faithful_complete_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 10.0,
+            "upper": 10.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 90.0,
+            "upper": 90.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 90.0,
+            "upper": 90.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 63,
+            "trials_with_confirmed_errors": 48,
+            "judged_complete": 54,
+            "not_fully_judged": 6,
+            "denominator": 60
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 1.323315649999131,
+            "p50_observed": 1.323315649999131,
+            "p95_all": 1.3323440000003757,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 57,
+            "p95_complete_reply": 1.332258800001,
+            "maximum_observed": 1.3399963000010757,
+            "maximum_all": 1.3399963000010757
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 3.778992900000958,
+            "p50_observed": 3.778992900000958,
+            "p95_all": 4.633940800000346,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 57,
+            "p95_complete_reply": 4.595395899999858,
+            "maximum_observed": 34.05744460000278,
+            "maximum_all": 34.05744460000278
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 3,
+            "truncated": 3,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "zh_to_en": {
+          "planned_measured": 60,
+          "confirmed_sent": 60,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 60,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 60,
+            "unknown": 3,
+            "lower": 44.63333333333333,
+            "upper": 49.63333333333333
+          },
+          "effective_speed_score": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 96.7651405000018,
+            "upper": 96.7651405000018
+          },
+          "faithful_complete_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 0.0,
+            "upper": 0.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 72,
+            "trials_with_confirmed_errors": 57,
+            "judged_complete": 51,
+            "not_fully_judged": 9,
+            "denominator": 60
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 1.3213466500001232,
+            "p50_observed": 1.3213466500001232,
+            "p95_all": 1.334177599999748,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 1.334177599999748,
+            "maximum_observed": 1.349670600000536,
+            "maximum_all": 1.349670600000536
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 3.525732300000527,
+            "p50_observed": 3.525732300000527,
+            "p95_all": 4.5368744999996125,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 4.5368744999996125,
+            "maximum_observed": 4.760457799999131,
+            "maximum_all": 4.760457799999131
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "mixed_to_zh": {
+          "planned_measured": 30,
+          "confirmed_sent": 30,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 30,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 64.16666666666667,
+            "upper": 64.16666666666667
+          },
+          "effective_speed_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 96.7538172999951,
+            "upper": 96.7538172999951
+          },
+          "faithful_complete_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 20.0,
+            "upper": 20.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 21,
+            "trials_with_confirmed_errors": 18,
+            "judged_complete": 30,
+            "not_fully_judged": 0,
+            "denominator": 30
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 1.3215297500000815,
+            "p50_observed": 1.3215297500000815,
+            "p95_all": 1.3365728000007948,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 1.3365728000007948,
+            "maximum_observed": 1.3551936999992904,
+            "maximum_all": 1.3551936999992904
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 3.3329501500011247,
+            "p50_observed": 3.3329501500011247,
+            "p95_all": 3.983999900001436,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 3.983999900001436,
+            "maximum_observed": 4.002723199999309,
+            "maximum_all": 4.002723199999309
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "mixed_to_en": {
+          "planned_measured": 30,
+          "confirmed_sent": 30,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 30,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 77.6,
+            "upper": 77.6
+          },
+          "effective_speed_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 94.94932603333473,
+            "upper": 94.94932603333473
+          },
+          "faithful_complete_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 50.0,
+            "upper": 50.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 90.0,
+            "upper": 90.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 12,
+            "trials_with_confirmed_errors": 12,
+            "judged_complete": 30,
+            "not_fully_judged": 0,
+            "denominator": 30
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 1.3220378500000152,
+            "p50_observed": 1.3220378500000152,
+            "p95_all": 1.334931700001107,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 1.334931700001107,
+            "maximum_observed": 1.3358358000004955,
+            "maximum_all": 1.3358358000004955
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 3.1462973000016063,
+            "p50_observed": 3.1462973000016063,
+            "p95_all": 11.63786970000001,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 11.63786970000001,
+            "maximum_observed": 11.657044499999756,
+            "maximum_all": 11.657044499999756
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        }
+      }
+    },
+    "qwen2.5:1.5b": {
+      "overall": {
+        "planned_measured": 180,
+        "confirmed_sent": 180,
+        "not_started": 0,
+        "send_unconfirmed": 0,
+        "valid_delivery_count": 180,
+        "invalid_delivery_count": 0,
+        "unknown_delivery_count": 0,
+        "quality_score": {
+          "denominator": 180,
+          "unknown": 9,
+          "lower": 70.66666666666667,
+          "upper": 75.66666666666667
+        },
+        "effective_speed_score": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 99.43467687222216,
+          "upper": 99.43467687222216
+        },
+        "faithful_complete_percent": {
+          "denominator": 180,
+          "unknown": 6,
+          "lower": 48.333333333333336,
+          "upper": 51.66666666666667
+        },
+        "valid_delivery_percent": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 100.0,
+          "upper": 100.0
+        },
+        "valid_within_8_seconds_percent": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 100.0,
+          "upper": 100.0
+        },
+        "critical_errors": {
+          "confirmed_errors": 90,
+          "trials_with_confirmed_errors": 78,
+          "judged_complete": 171,
+          "not_fully_judged": 9,
+          "denominator": 180
+        },
+        "api_first_chunk": {
+          "unit": "seconds",
+          "all_count": 180,
+          "observed_count": 180,
+          "missing_count": 0,
+          "p50_all": 0.9566909000004671,
+          "p50_observed": 0.9566909000004671,
+          "p95_all": 1.4234507999990456,
+          "p95_all_note": null,
+          "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+          "complete_reply_count": 180,
+          "p95_complete_reply": 1.4234507999990456,
+          "maximum_observed": 1.4472218000009889,
+          "maximum_all": 1.4472218000009889
+        },
+        "api_completion": {
+          "unit": "seconds",
+          "all_count": 180,
+          "observed_count": 180,
+          "missing_count": 0,
+          "p50_all": 3.847400650000054,
+          "p50_observed": 3.847400650000054,
+          "p95_all": 5.879804000000149,
+          "p95_all_note": null,
+          "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+          "complete_reply_count": 180,
+          "p95_complete_reply": 5.879804000000149,
+          "maximum_observed": 6.903900199999043,
+          "maximum_all": 6.903900199999043
+        },
+        "failures_and_unknowns": {
+          "empty": 0,
+          "refusal": 0,
+          "wrong_language": 0,
+          "truncated": 0,
+          "timeout": 0,
+          "error": 0,
+          "unknown_truncation": 0,
+          "missing_judgment": 0,
+          "uncertain_judgment": 0
+        }
+      },
+      "directions": {
+        "en_to_zh": {
+          "planned_measured": 60,
+          "confirmed_sent": 60,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 60,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 60,
+            "unknown": 3,
+            "lower": 56.0,
+            "upper": 61.0
+          },
+          "effective_speed_score": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 99.57638308333328,
+            "upper": 99.57638308333328
+          },
+          "faithful_complete_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 25.0,
+            "upper": 25.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 48,
+            "trials_with_confirmed_errors": 42,
+            "judged_complete": 57,
+            "not_fully_judged": 3,
+            "denominator": 60
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 0.9565217999997913,
+            "p50_observed": 0.9565217999997913,
+            "p95_all": 1.4228543999997783,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 1.4228543999997783,
+            "maximum_observed": 1.4299095000005764,
+            "maximum_all": 1.4299095000005764
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 3.7661458000002312,
+            "p50_observed": 3.7661458000002312,
+            "p95_all": 5.0465480999992,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 5.0465480999992,
+            "maximum_observed": 5.169477100000222,
+            "maximum_all": 5.169477100000222
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "zh_to_en": {
+          "planned_measured": 60,
+          "confirmed_sent": 60,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 60,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 60,
+            "unknown": 3,
+            "lower": 73.75,
+            "upper": 78.75
+          },
+          "effective_speed_score": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 99.15242730000016,
+            "upper": 99.15242730000016
+          },
+          "faithful_complete_percent": {
+            "denominator": 60,
+            "unknown": 3,
+            "lower": 45.0,
+            "upper": 50.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 27,
+            "trials_with_confirmed_errors": 24,
+            "judged_complete": 57,
+            "not_fully_judged": 3,
+            "denominator": 60
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 0.9566874500014819,
+            "p50_observed": 0.9566874500014819,
+            "p95_all": 1.4242029000015464,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 1.4242029000015464,
+            "maximum_observed": 1.4472218000009889,
+            "maximum_all": 1.4472218000009889
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 4.185442549999607,
+            "p50_observed": 4.185442549999607,
+            "p95_all": 6.593746599999577,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 6.593746599999577,
+            "maximum_observed": 6.903900199999043,
+            "maximum_all": 6.903900199999043
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "mixed_to_zh": {
+          "planned_measured": 30,
+          "confirmed_sent": 30,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 30,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 92.0,
+            "upper": 92.0
+          },
+          "effective_speed_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 99.15044046666601,
+            "upper": 99.15044046666601
+          },
+          "faithful_complete_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 90.0,
+            "upper": 90.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 3,
+            "trials_with_confirmed_errors": 3,
+            "judged_complete": 30,
+            "not_fully_judged": 0,
+            "denominator": 30
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 0.9559580499999356,
+            "p50_observed": 0.9559580499999356,
+            "p95_all": 1.4303694999998697,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 1.4303694999998697,
+            "maximum_observed": 1.4308110999991186,
+            "maximum_all": 1.4308110999991186
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 3.251277850000406,
+            "p50_observed": 3.251277850000406,
+            "p95_all": 4.666385999998965,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 4.666385999998965,
+            "maximum_observed": 4.756472699998994,
+            "maximum_all": 4.756472699998994
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "mixed_to_en": {
+          "planned_measured": 30,
+          "confirmed_sent": 30,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 30,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 30,
+            "unknown": 3,
+            "lower": 72.5,
+            "upper": 82.5
+          },
+          "effective_speed_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "faithful_complete_percent": {
+            "denominator": 30,
+            "unknown": 3,
+            "lower": 60.0,
+            "upper": 70.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 12,
+            "trials_with_confirmed_errors": 9,
+            "judged_complete": 27,
+            "not_fully_judged": 3,
+            "denominator": 30
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 0.9574949499992726,
+            "p50_observed": 0.9574949499992726,
+            "p95_all": 0.9623357000000397,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 0.9623357000000397,
+            "maximum_observed": 0.9650962999985495,
+            "maximum_all": 0.9650962999985495
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 3.514659049999864,
+            "p50_observed": 3.514659049999864,
+            "p95_all": 6.580045400000017,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 6.580045400000017,
+            "maximum_observed": 6.839672099999007,
+            "maximum_all": 6.839672099999007
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        }
+      }
+    },
+    "qwen3:1.7b": {
+      "overall": {
+        "planned_measured": 180,
+        "confirmed_sent": 180,
+        "not_started": 0,
+        "send_unconfirmed": 0,
+        "valid_delivery_count": 180,
+        "invalid_delivery_count": 0,
+        "unknown_delivery_count": 0,
+        "quality_score": {
+          "denominator": 180,
+          "unknown": 6,
+          "lower": 84.37777777777778,
+          "upper": 87.71111111111111
+        },
+        "effective_speed_score": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 84.79890762222249,
+          "upper": 84.79890762222249
+        },
+        "faithful_complete_percent": {
+          "denominator": 180,
+          "unknown": 6,
+          "lower": 70.0,
+          "upper": 73.33333333333333
+        },
+        "valid_delivery_percent": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 100.0,
+          "upper": 100.0
+        },
+        "valid_within_8_seconds_percent": {
+          "denominator": 180,
+          "unknown": 0,
+          "lower": 78.88888888888889,
+          "upper": 78.88888888888889
+        },
+        "critical_errors": {
+          "confirmed_errors": 45,
+          "trials_with_confirmed_errors": 45,
+          "judged_complete": 174,
+          "not_fully_judged": 6,
+          "denominator": 180
+        },
+        "api_first_chunk": {
+          "unit": "seconds",
+          "all_count": 180,
+          "observed_count": 180,
+          "missing_count": 0,
+          "p50_all": 2.450333450000471,
+          "p50_observed": 2.450333450000471,
+          "p95_all": 2.472604599999613,
+          "p95_all_note": null,
+          "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+          "complete_reply_count": 180,
+          "p95_complete_reply": 2.472604599999613,
+          "maximum_observed": 2.7836224999991828,
+          "maximum_all": 2.7836224999991828
+        },
+        "api_completion": {
+          "unit": "seconds",
+          "all_count": 180,
+          "observed_count": 180,
+          "missing_count": 0,
+          "p50_all": 6.892122350000136,
+          "p50_observed": 6.892122350000136,
+          "p95_all": 8.769991900000605,
+          "p95_all_note": null,
+          "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+          "complete_reply_count": 180,
+          "p95_complete_reply": 8.769991900000605,
+          "maximum_observed": 11.636146799999551,
+          "maximum_all": 11.636146799999551
+        },
+        "failures_and_unknowns": {
+          "empty": 0,
+          "refusal": 0,
+          "wrong_language": 0,
+          "truncated": 0,
+          "timeout": 0,
+          "error": 0,
+          "unknown_truncation": 0,
+          "missing_judgment": 0,
+          "uncertain_judgment": 0
+        }
+      },
+      "directions": {
+        "en_to_zh": {
+          "planned_measured": 60,
+          "confirmed_sent": 60,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 60,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 81.08333333333333,
+            "upper": 81.08333333333333
+          },
+          "effective_speed_score": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 84.0961672166671,
+            "upper": 84.0961672166671
+          },
+          "faithful_complete_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 60.0,
+            "upper": 60.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 75.0,
+            "upper": 75.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 24,
+            "trials_with_confirmed_errors": 24,
+            "judged_complete": 60,
+            "not_fully_judged": 0,
+            "denominator": 60
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 2.450253650000377,
+            "p50_observed": 2.450253650000377,
+            "p95_all": 2.4859988000025623,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 2.4859988000025623,
+            "maximum_observed": 2.6817085000002407,
+            "maximum_all": 2.6817085000002407
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 7.052871249998134,
+            "p50_observed": 7.052871249998134,
+            "p95_all": 8.781412300000738,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 8.781412300000738,
+            "maximum_observed": 11.636146799999551,
+            "maximum_all": 11.636146799999551
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "zh_to_en": {
+          "planned_measured": 60,
+          "confirmed_sent": 60,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 60,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 60,
+            "unknown": 6,
+            "lower": 74.05,
+            "upper": 84.05
+          },
+          "effective_speed_score": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 84.57828105833339,
+            "upper": 84.57828105833339
+          },
+          "faithful_complete_percent": {
+            "denominator": 60,
+            "unknown": 6,
+            "lower": 55.00000000000001,
+            "upper": 65.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 60,
+            "unknown": 0,
+            "lower": 66.66666666666666,
+            "upper": 66.66666666666666
+          },
+          "critical_errors": {
+            "confirmed_errors": 18,
+            "trials_with_confirmed_errors": 18,
+            "judged_complete": 54,
+            "not_fully_judged": 6,
+            "denominator": 60
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 2.449860049999188,
+            "p50_observed": 2.449860049999188,
+            "p95_all": 2.461221099998511,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 2.461221099998511,
+            "maximum_observed": 2.486780400000498,
+            "maximum_all": 2.486780400000498
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 60,
+            "observed_count": 60,
+            "missing_count": 0,
+            "p50_all": 7.456047050000052,
+            "p50_observed": 7.456047050000052,
+            "p95_all": 8.810340600000927,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 60,
+            "p95_complete_reply": 8.810340600000927,
+            "maximum_observed": 9.154900100002124,
+            "maximum_all": 9.154900100002124
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "mixed_to_zh": {
+          "planned_measured": 30,
+          "confirmed_sent": 30,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 30,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 99.5,
+            "upper": 99.5
+          },
+          "effective_speed_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 85.2549172500015,
+            "upper": 85.2549172500015
+          },
+          "faithful_complete_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 90.0,
+            "upper": 90.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 0,
+            "trials_with_confirmed_errors": 0,
+            "judged_complete": 30,
+            "not_fully_judged": 0,
+            "denominator": 30
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 2.4508066500002315,
+            "p50_observed": 2.4508066500002315,
+            "p95_all": 2.454536900000676,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 2.454536900000676,
+            "maximum_observed": 2.468632799998886,
+            "maximum_all": 2.468632799998886
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 6.126511049999863,
+            "p50_observed": 6.126511049999863,
+            "p95_all": 8.499291500000254,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 8.499291500000254,
+            "maximum_observed": 8.516112999997858,
+            "maximum_all": 8.516112999997858
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        },
+        "mixed_to_en": {
+          "planned_measured": 30,
+          "confirmed_sent": 30,
+          "not_started": 0,
+          "send_unconfirmed": 0,
+          "valid_delivery_count": 30,
+          "invalid_delivery_count": 0,
+          "unknown_delivery_count": 0,
+          "quality_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 96.5,
+            "upper": 96.5
+          },
+          "effective_speed_score": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 86.18963193333245,
+            "upper": 86.18963193333245
+          },
+          "faithful_complete_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 90.0,
+            "upper": 90.0
+          },
+          "valid_delivery_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "valid_within_8_seconds_percent": {
+            "denominator": 30,
+            "unknown": 0,
+            "lower": 100.0,
+            "upper": 100.0
+          },
+          "critical_errors": {
+            "confirmed_errors": 3,
+            "trials_with_confirmed_errors": 3,
+            "judged_complete": 30,
+            "not_fully_judged": 0,
+            "denominator": 30
+          },
+          "api_first_chunk": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 2.450915449999229,
+            "p50_observed": 2.450915449999229,
+            "p95_all": 2.4705214999994496,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 2.4705214999994496,
+            "maximum_observed": 2.7836224999991828,
+            "maximum_all": 2.7836224999991828
+          },
+          "api_completion": {
+            "unit": "seconds",
+            "all_count": 30,
+            "observed_count": 30,
+            "missing_count": 0,
+            "p50_all": 6.261462100000244,
+            "p50_observed": 6.261462100000244,
+            "p95_all": 6.674745100001019,
+            "p95_all_note": null,
+            "complete_reply_definition": "terminal complete, not truncated, nonblank output, completion event observed",
+            "complete_reply_count": 30,
+            "p95_complete_reply": 6.674745100001019,
+            "maximum_observed": 7.023334600002272,
+            "maximum_all": 7.023334600002272
+          },
+          "failures_and_unknowns": {
+            "empty": 0,
+            "refusal": 0,
+            "wrong_language": 0,
+            "truncated": 0,
+            "timeout": 0,
+            "error": 0,
+            "unknown_truncation": 0,
+            "missing_judgment": 0,
+            "uncertain_judgment": 0
+          }
+        }
+      }
+    }
+  },
+  "non_resident_warmups": {
+    "scope": "Requests started with no resident model; observed request-to-first and request-to-done include loading plus generation; not a separately timed load or a full system cold boot.",
+    "excluded_from_measured_scores": true,
+    "observations": [
+      {
+        "model": "qwen3:1.7b",
+        "repeat": 1,
+        "resume_warmup": false,
+        "first_seconds": 11.070121699998708,
+        "done_seconds": 12.634155899999314
+      },
+      {
+        "model": "qwen2.5:1.5b",
+        "repeat": 1,
+        "resume_warmup": false,
+        "first_seconds": 8.31429510000089,
+        "done_seconds": 9.680179000000862
+      },
+      {
+        "model": "llama3.2:1b",
+        "repeat": 1,
+        "resume_warmup": false,
+        "first_seconds": 7.0021297999992385,
+        "done_seconds": 8.260709399999541
+      },
+      {
+        "model": "qwen2.5:1.5b",
+        "repeat": 2,
+        "resume_warmup": false,
+        "first_seconds": 8.124903200001427,
+        "done_seconds": 9.489346900001692
+      },
+      {
+        "model": "llama3.2:1b",
+        "repeat": 2,
+        "resume_warmup": false,
+        "first_seconds": 6.252430200000163,
+        "done_seconds": 7.514641399999164
+      },
+      {
+        "model": "qwen3:1.7b",
+        "repeat": 2,
+        "resume_warmup": false,
+        "first_seconds": 13.93154400000094,
+        "done_seconds": 15.536663900000349
+      },
+      {
+        "model": "llama3.2:1b",
+        "repeat": 3,
+        "resume_warmup": false,
+        "first_seconds": 6.8152473000009195,
+        "done_seconds": 8.071706300001097
+      },
+      {
+        "model": "qwen3:1.7b",
+        "repeat": 3,
+        "resume_warmup": false,
+        "first_seconds": 10.355087299998559,
+        "done_seconds": 11.936351700001978
+      },
+      {
+        "model": "qwen2.5:1.5b",
+        "repeat": 3,
+        "resume_warmup": false,
+        "first_seconds": 8.293023999998695,
+        "done_seconds": 9.6608954000003
+      },
+      {
+        "model": "qwen3:1.7b",
+        "repeat": 1,
+        "resume_warmup": true,
+        "first_seconds": 10.376290599999265,
+        "done_seconds": 12.007774699999572
+      }
+    ]
+  }
+}
