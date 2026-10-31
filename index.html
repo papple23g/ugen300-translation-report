@@ -16,17 +16,16 @@ code{overflow-wrap:anywhere}
 <header>
 <div class="eyebrow">UGEN300 / TRANSLATION RESEARCH</div>
 <h1>翻譯品質與速度比較</h1>
-<p class="updated">最後更新：<time datetime="2026-10-31T04:44:24.018Z">2026-10-31 12:44:24</time>（台灣時間 / UTC+8）</p>
+<p class="updated">最後更新：<time datetime="2026-10-31T07:18:56.813Z">2026-10-31 15:18:56</time>（台灣時間 / UTC+8）</p>
 <nav class="nav" aria-label="研究頁面"><span>研究技能樹（原件保留本機）</span><span>STT 研究演進（原件保留本機）</span><span>翻譯評測原報告（原件保留本機）</span></nav>
-<p class="intro note">實心符號為 60 個合成來源各重複三次的原批次；空心符號為 12 個曾曝光合成來源各測一次的獨立探索批次，兩批樣本及測試時間不同，不能視為同批正式排名。品質由 LLM 匿名判讀，部分未確定且未經人工複核；上下界不是統計信賴區間。時間均為本機 API 觀測，不代表說話句尾至畫面的延遲。</p>
+<p class="intro note">主圖只納入每模型 60 個合成來源各重複三次的完整資料。原三款來自 10/29；新增模型若有完整資料，來自 10/31 之後的獨立批次，測試時間與批次不同。舊批次評審的精確版本未知，無法確認不同批次的評審版本一致。品質由 LLM 匿名判讀，部分未確定且未經人工複核；上下界不是統計信賴區間，也不是正式排名。時間均為本機 API 觀測，不代表說話句尾至畫面的延遲。</p>
 </header>
 
 <section class="card" aria-labelledby="quality-title">
 <div class="card-head"><div><h2 id="quality-title">品質 / 速度</h2><p class="note">橫軸越短表示 API 越快；縱向線段的兩端是品質分數的上下界，不顯示單一估計分數。p95 保留截斷及格式錯誤的請求。</p></div>
 <div class="controls"><label for="direction-select">語向<select id="direction-select"><option value="all">全部</option><option value="en_to_zh">英文 → 繁中</option><option value="zh_to_en">繁中 → 英文</option><option value="mixed_to_zh">混語 → 繁中</option><option value="mixed_to_en">混語 → 英文</option></select></label><label for="speed-select">時間指標<select id="speed-select"><option value="done_p95">API 終止 p95</option><option value="first_p95">首段文字 p95</option></select></label></div></div>
 <div class="legend" id="model-legend" role="group" aria-label="顯示模型"></div>
-<p class="note">實心：60 案 / 三輪。空心：12 案 / 一輪探索；DeepSeek 暖機截斷、批次完整性未通過。語向切換時探索集每個語向只有 2 或 4 案。</p>
-<div class="legend" id="pilot-legend" role="group" aria-label="顯示 12 案探索模型"></div>
+<p class="note">點選圖例或使用鍵盤可篩選模型，三張圖與表格共用篩選；未完成者標示待補。12 案探索不放入主圖。</p>
 <div class="plot-wrap"><div class="plot" id="quality-chart" role="region" aria-label="模型品質區間與 API 耗時散點圖"></div><p class="plot-status" id="quality-status" role="status" hidden></p></div>
 </section>
 
@@ -38,20 +37,25 @@ code{overflow-wrap:anywhere}
 
 <section class="card" aria-labelledby="supplement-title">
 <h2 id="supplement-title">10/31 其他模型補測 / 12 案探索</h2>
-<p class="note">Windows / UGen300，各模型測試相同 12 個曾曝光的合成來源，各執行一次。此為獨立批次，在主圖以空心符號呈現，不能混稱 60 案批次或作正式排名。三模型 36 次請求皆收到 API 終止；DeepSeek 暖機截斷，依既有規則整批資料完整性未通過。</p>
+<p class="note">Windows / UGen300，各模型測試相同 12 個曾曝光的合成來源，各執行一次。此為獨立的歷史探索，不能混稱 60 案批次或作正式排名。三模型 36 次請求皆收到 API 終止；DeepSeek 暖機截斷，依既有規則整批資料完整性未通過。</p>
 <div class="table-wrap"><table class="history-table"><thead><tr><th scope="col">模型</th><th scope="col">來源 / 請求</th><th scope="col">品質 / 100</th><th scope="col">有效速度 / 100</th><th scope="col">首段 p95</th><th scope="col">API 終止 p95</th><th scope="col">截斷</th></tr></thead><tbody>
 <tr><th scope="row">qwen2:1.5b</th><td>12 / 12</td><td>62.5–79.2</td><td>91.5</td><td>1.22 秒</td><td>4.78 秒</td><td>0 / 12</td></tr>
 <tr><th scope="row">deepseek_r1:1.5b</th><td>12 / 12</td><td>15.9–24.3</td><td>15.3</td><td>2.87 秒</td><td>44.77 秒</td><td>9 / 12</td></tr>
 <tr><th scope="row">qwen2.5-coder:1.5b</th><td>12 / 12</td><td>60.4–68.7</td><td>99.8</td><td>1.21 秒</td><td>3.54 秒</td><td>0 / 12</td></tr>
 </tbody></table></div>
-<p class="note">品質由 Codex LLM 匿名判讀，未經人工複核；未知判讀保留為上下界，並非統計信賴區間。截斷保留在分母，品質與有效速度記 0。12 筆的 p95 是最慢一筆，不足以推論長期效能；API 終止不代表完整譯文。此測試未涵蓋語音辨識、畫面或持續負載。</p>
+<p class="note">品質由 Codex LLM 匿名判讀，精確版本未知且未經人工複核；未知判讀保留為上下界，並非統計信賴區間。截斷保留在分母，品質與有效速度記 0。12 筆的 p95 是最慢一筆，不足以推論長期效能；API 終止不代表完整譯文。此測試未涵蓋語音辨識、畫面或持續負載。</p>
 <p class="note">來源：<span>探索報告（原件保留本機）</span> / <a href="research/translation-evaluation-20261031/pilot-aggregate.json">匿名彙整</a>；SHA-256 <code>640284d6ad8e1713b9d47e28e147e34ceb8deb2187295eadadf407d73d27cf13</code>。</p>
 </section>
 
 <section class="card" aria-labelledby="load-title">
-<div class="card-head"><div><h2 id="load-title">持續輸入 / 積壓與逐段耗時</h2><p class="note">每 5 秒一段，連續 10 分鐘；30 個英文 / 混語來源翻成繁中，各重複四次。三模型分開執行、單一 worker；圖表不隨上方語向切換。虛線表示停止輸入，之後繼續觀察排空。</p></div></div>
-<h3>尚未收到 API 終止的段落</h3><div class="plot-wrap"><div class="plot" id="backlog-chart" role="region" aria-label="持續輸入與排空期間未終止的段落數"></div><p class="plot-status" id="backlog-status" role="status" hidden></p></div>
-<h3>逐段抵達至 API 終止</h3><p class="note">橫軸為段落抵達時間，縱軸包含排隊及 API 呼叫；× 表示截斷或輸出無漢字，兩種狀態可能重疊。已收到終止訊號不保證譯文完整或正確。</p><div class="plot-wrap"><div class="plot" id="latency-chart" role="region" aria-label="每個文字段落抵達至 API 終止的耗時"></div><p class="plot-status" id="latency-status" role="status" hidden></p></div>
+<div class="card-head"><div><h2 id="load-title">持續輸入 / 積壓與逐段耗時</h2><p class="note">每 5 秒一段，連續 10 分鐘；30 個英文 / 混語來源翻成繁中，各重複四次。各模型分開執行、單一 worker；圖表不隨上方語向切換。虛線表示停止輸入，之後繼續觀察排空；未完成 120 段的模型標示待補。</p></div></div>
+<div class="card-head"><h3>尚未收到 API 終止的段落</h3><div class="controls"><label for="backlog-range">時間範圍<select id="backlog-range"><option value="all">全程</option><option value="15">前 15 分鐘</option></select></label></div></div>
+<div class="legend" id="backlog-legend" role="group" aria-label="積壓圖模型篩選"></div>
+<div class="plot-wrap"><div class="plot" id="backlog-chart" role="region" aria-label="持續輸入與排空期間未終止的段落數"></div><p class="plot-status" id="backlog-status" role="status" hidden></p></div>
+<div class="card-head"><h3>逐段抵達至 API 終止</h3><div class="controls"><label for="latency-scale">耗時刻度<select id="latency-scale"><option value="linear">線性</option><option value="log">對數</option></select></label></div></div>
+<p class="note">橫軸為段落抵達時間，縱軸包含排隊及 API 呼叫；空心符號表示截斷或輸出無漢字，兩種狀態可能重疊。對數刻度可比較長短耗時，但無法呈現零或負值。已收到終止訊號不保證譯文完整或正確。</p>
+<div class="legend" id="latency-legend" role="group" aria-label="逐段耗時圖模型篩選"></div>
+<div class="plot-wrap"><div class="plot" id="latency-chart" role="region" aria-label="每個文字段落抵達至 API 終止的耗時"></div><p class="plot-status" id="latency-status" role="status" hidden></p></div>
 <div class="table-wrap" id="load-table"></div>
 </section>
 
@@ -3983,22 +3987,21 @@ return Plotly;
 <script id="translation-runtime">(() => {
   "use strict";
   const data = JSON.parse(document.getElementById("translation-data").textContent);
-  const pilot = JSON.parse(document.getElementById("pilot-data").textContent);
-  const pilotModels = ["qwen2:1.5b", "deepseek_r1:1.5b", "qwen2.5-coder:1.5b"];
   const $ = id => document.getElementById(id);
   const escape = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[ch]);
   const models = {
     "qwen3:1.7b": {color:"#b42318",dark:"#ff897e",symbol:"circle",glyph:"●"},
     "qwen2.5:1.5b": {color:"#087e62",dark:"#62d8b1",symbol:"diamond",glyph:"◆"},
     "llama3.2:1b": {color:"#7041a6",dark:"#cbadff",symbol:"square",glyph:"■"},
-    "qwen2:1.5b": {color:"#1d4ed8",dark:"#8bb8ff",symbol:"circle-open",glyph:"○"},
-    "deepseek_r1:1.5b": {color:"#b45309",dark:"#ffbf63",symbol:"diamond-open",glyph:"◇"},
-    "qwen2.5-coder:1.5b": {color:"#a21caf",dark:"#f0a6f7",symbol:"square-open",glyph:"□"}
+    "qwen2:1.5b": {color:"#1d4ed8",dark:"#8bb8ff",symbol:"triangle-up",glyph:"▲"},
+    "deepseek_r1:1.5b": {color:"#b45309",dark:"#ffbf63",symbol:"star",glyph:"★"},
+    "qwen2.5-coder:1.5b": {color:"#a21caf",dark:"#f0a6f7",symbol:"hexagon",glyph:"⬟"}
   };
+  const modelNames = Object.keys(models);
+  const expectedByDirection = {all:180,en_to_zh:60,zh_to_en:60,mixed_to_zh:30,mixed_to_en:30};
   const directionLabels = {all:"全部",en_to_zh:"英文 → 繁中",zh_to_en:"繁中 → 英文",mixed_to_zh:"混語 → 繁中",mixed_to_en:"混語 → 英文"};
   const deliveryLabels = {valid:"有效交付",truncated:"截斷",wrong_language:"目標語言錯誤"};
-  const state = {direction:"all",speed:"done_p95",sort:"model",ascending:true,visible:new Set(data.models),expanded:null};
-  state.pilotVisible = new Set(pilotModels);
+  const state = {direction:"all",speed:"done_p95",sort:"model",ascending:true,visible:new Set(modelNames),expanded:null,backlogRange:"all",latencyScale:"linear"};
   const number = (value, digits = 2) => Number.isFinite(value) ? value.toFixed(digits) : "—";
   const interval = row => `${number(row.quality_lower,1)}–${number(row.quality_upper,1)}`;
   const dark = () => matchMedia("(prefers-color-scheme: dark)").matches;
@@ -4008,8 +4011,18 @@ return Plotly;
     return {card:css.getPropertyValue("--card").trim(), ink:css.getPropertyValue("--ink").trim(),
       line:css.getPropertyValue("--line").trim(), muted:css.getPropertyValue("--muted").trim()};
   };
-  const selectedSummaries = () => data.formal.summaries.filter(row => row.direction === state.direction && state.visible.has(row.model));
   const selectedTrials = model => data.formal.trials.filter(row => row.model === model && (state.direction === "all" || row.direction === state.direction));
+  const formalComplete = model => data.formal.trials.filter(row => row.model === model).length === 180;
+  const formalSummary = model => {
+    const row = data.formal.summaries.find(item => item.model === model && item.direction === state.direction);
+    return formalComplete(model) && row && row.trials === expectedByDirection[state.direction] && selectedTrials(model).length === row.trials ? row : null;
+  };
+  const selectedSummaries = () => modelNames.filter(model => state.visible.has(model)).map(model => {
+    return formalSummary(model) || {model,pending:true};
+  });
+  const sustainedRows = model => data.sustained.trials.filter(row => row.model === model);
+  const sustainedComplete = model => sustainedRows(model).length === 120 && !!data.sustained.summaries[model];
+  const pendingText = (count, expected) => count === expected ? "摘要或分類資料不完整" : count ? `資料不完整（${count} / ${expected}）` : "待補";
 
   function showProblem(id, message) {
     const status = $(id);
@@ -4018,12 +4031,14 @@ return Plotly;
   }
 
   function renderLegend() {
-    $("model-legend").innerHTML = data.models.map((model, index) =>
-      `<button type="button" data-model-index="${index}" aria-pressed="${state.visible.has(model)}"><span class="swatch" style="--color:${color(model)}" aria-hidden="true"></span><span aria-hidden="true">${models[model].glyph}</span>${escape(model)}</button>`
-    ).join("") + '<button type="button" id="show-all-models">顯示全部</button>';
-    $("pilot-legend").innerHTML = pilotModels.map((model, index) =>
-      `<button type="button" data-pilot-index="${index}" aria-pressed="${state.pilotVisible.has(model)}"><span style="color:${color(model)}" aria-hidden="true">${models[model].glyph}</span>${escape(model)} / 12 案探索</button>`
-    ).join("");
+    for (const id of ["model-legend","backlog-legend","latency-legend"]) {
+      $(id).innerHTML = modelNames.map((model, index) => {
+        const summary = id === "model-legend" ? formalSummary(model) : null;
+        const complete = id === "model-legend" ? !!summary : sustainedComplete(model);
+        const label = !complete ? "（待補）" : summary && ![summary[state.speed],summary.quality_lower,summary.quality_upper].every(Number.isFinite) ? "（指標未判定）" : "";
+        return `<button type="button" data-model-index="${index}" aria-pressed="${state.visible.has(model)}"><span style="color:${color(model)}" aria-hidden="true">${models[model].glyph}</span>${escape(model)}${label}</button>`;
+      }).join("") + '<button type="button" data-show-all>顯示全部</button>';
+    }
   }
 
   function caseTable(model) {
@@ -4046,10 +4061,14 @@ return Plotly;
       ["未判定",r => String(r.quality_unknown)],["首段 p95",r => `${number(r.first_p95)} 秒`],
       ["終止 p95",r => `${number(r.done_p95)} 秒`],["截斷 / 錯語",r => `${r.truncated} / ${r.wrong_language}`]];
     $("model-table").innerHTML = `<table class="model-table"><thead><tr><th scope="col">模型</th>${columns.map(col => `<th scope="col">${col[0]}</th>`).join("")}</tr></thead><tbody>${rows.map(row => {
-      const index = data.models.indexOf(row.model), open = state.expanded === row.model;
+      const index = modelNames.indexOf(row.model), open = state.expanded === row.model;
+      if (row.pending) {
+        const count = data.formal.trials.filter(item => item.model === row.model).length;
+        return `<tr class="model-row"><th scope="row">${escape(row.model)}</th><td colspan="6">${escape(pendingText(count,180))}</td></tr>`;
+      }
       return `<tr class="model-row"><th scope="row"><button type="button" data-open-index="${index}" aria-expanded="${open}" aria-controls="model-detail-${index}">${open ? "▾" : "▸"} ${escape(row.model)}</button></th>${columns.map(col => `<td data-label="${col[0]}">${escape(col[1](row))}</td>`).join("")}</tr><tr class="detail-row" id="model-detail-${index}" ${open ? "" : "hidden"}><td colspan="7">${open ? caseTable(row.model) : ""}</td></tr>`;
     }).join("")}</tbody></table>`;
-    $("table-status").textContent = `${directionLabels[state.direction]} / ${rows.length} 個模型；品質區間不是正式排名。`;
+    $("table-status").textContent = `${directionLabels[state.direction]} / ${rows.length} 個模型 / ${rows.filter(row => row.pending).length} 個待補或不完整；品質區間不是正式排名。`;
   }
 
   function renderSources() {
@@ -4058,13 +4077,14 @@ return Plotly;
 
   function renderLoadTable() {
     const header = ["模型","第 10 分鐘未終止","排空","首段 p95","終止 p95","截斷","無漢字","截斷且無漢字"];
-    $("load-table").innerHTML = `<table class="model-table load-table"><thead><tr>${header.map(x => `<th scope="col">${x}</th>`).join("")}</tr></thead><tbody>${data.models.map(model => {
-      const summary = data.sustained.summaries[model], rows = data.sustained.trials.filter(row => row.model === model);
+    $("load-table").innerHTML = `<table class="model-table load-table"><thead><tr>${header.map(x => `<th scope="col">${x}</th>`).join("")}</tr></thead><tbody>${modelNames.filter(model => state.visible.has(model)).map(model => {
+      const summary = data.sustained.summaries[model], rows = sustainedRows(model);
+      if (!sustainedComplete(model)) return `<tr class="model-row"><th scope="row">${escape(model)}</th><td colspan="7">${escape(pendingText(rows.length,120))}</td></tr>`;
       const values = [summary.unfinished_at_cutoff,`${number(summary.drain_seconds)} 秒`,`${number(summary.arrival_to_first_p95)} 秒`,
         `${number(summary.arrival_to_done_p95)} 秒`,summary.truncated,summary.no_chinese_character_count,
         rows.filter(row => row.truncated && row.missing_chinese).length];
       return `<tr class="model-row"><th scope="row">${escape(model)}</th>${values.map((value,index) => `<td data-label="${header[index + 1]}">${escape(value)}</td>`).join("")}</tr>`;
-    }).join("")}</tbody></table><p class="note">無漢字是粗略格式檢查；有漢字不保證正確。Llama 的四次截斷都沒有漢字，因此兩欄不能直接相加。</p>`;
+    }).join("")}</tbody></table><p class="note">無漢字是粗略格式檢查；有漢字不保證正確。截斷與無漢字可能重疊，兩欄不能直接相加。</p>`;
   }
 
   function layout(title, xTitle, yTitle) {
@@ -4084,20 +4104,18 @@ return Plotly;
     qualityQueue = qualityQueue.catch(() => {}).then(async () => {
       if (version !== requestVersion) return;
       if (!window.Plotly) throw new Error("Plotly unavailable");
-      const rows = [...selectedSummaries().map(row => ({...row, cohort:"60 案 / 三輪"})),
-        ...pilot.filter(row => row.direction === state.direction && state.pilotVisible.has(row.model)).map(row => ({...row, cohort:"12 案 / 一輪探索"}))];
+      const rows = selectedSummaries().filter(row => !row.pending);
       const traces = rows.filter(row => Number.isFinite(row[state.speed]) &&
         Number.isFinite(row.quality_lower) && Number.isFinite(row.quality_upper)).map(row => {
         const lower = row.quality_lower, upper = row.quality_upper;
         const ys = lower === upper ? [lower] : [lower,upper];
-        const labels = ys.map((value,index) => `${escape(row.model)}<br>批次：${escape(row.cohort)}<br>語向：${escape(directionLabels[row.direction])}` +
+        const labels = ys.map((value,index) => `${escape(row.model)}<br>60 案 / 三輪<br>語向：${escape(directionLabels[row.direction])}` +
           `<br>品質${lower === upper ? "分數" : index === 0 ? "下界" : "上界"}：${number(value,1)} / 100` +
           `<br>品質區間：${interval(row)} / 100<br>${state.speed === "done_p95" ? "API 終止" : "首段文字"} p95：${number(row[state.speed])} 秒` +
           `<br>${row.sources} 個來源 / ${row.trials} 次請求<br>品質未判定：${row.quality_unknown} 次` +
-          `<br>截斷 / 錯誤語言：${row.truncated} / ${row.wrong_language} 次` +
-          (row.cohort.startsWith("12") ? "<br>來源曾曝光；DeepSeek 暖機截斷，本批完整性未通過；非正式排名" : ""));
+          `<br>截斷 / 錯誤語言：${row.truncated} / ${row.wrong_language} 次`);
         return {type:"scatter",mode:"lines+markers",name:row.model,x:ys.map(() => row[state.speed]),y:ys,
-          line:{color:color(row.model),width:3,dash:row.cohort.startsWith("12") ? "dot" : "solid"},marker:{color:color(row.model),symbol:models[row.model].symbol,size:11,line:{width:2}},
+          line:{color:color(row.model),width:3},marker:{color:color(row.model),symbol:models[row.model].symbol,size:11,line:{width:2}},
           text:labels,hovertemplate:"%{text}<extra></extra>",customdata:ys.map(() => row.model),showlegend:false};
       });
       const chartLayout = layout(`${directionLabels[state.direction]} / 品質區間與速度`,
@@ -4106,15 +4124,15 @@ return Plotly;
       chartLayout.yaxis.range = [0,100];
       chartLayout.xaxis.rangemode = "tozero";
       await Plotly.react($("quality-chart"),traces,chartLayout,config);
-      $("quality-status").hidden = true;
+      if (traces.length) $("quality-status").hidden = true;
+      else showProblem("quality-status","目前所選模型沒有完整的 60 案 / 三輪資料，或此語向的品質 / 時間未判定。請查看下方表格。");
       if (!$('quality-chart').__bound) {
         $('quality-chart').on("plotly_click",event => {
           const model = event.points?.[0]?.customdata;
-          if (pilotModels.includes(model)) { $("supplement-title").scrollIntoView({block:"start"}); return; }
-          if (!data.models.includes(model)) return;
+          if (!modelNames.includes(model)) return;
           state.expanded = model;
           renderTable();
-          const index = data.models.indexOf(model);
+          const index = modelNames.indexOf(model);
           document.querySelector(`[data-open-index="${index}"]`)?.focus({preventScroll:true});
           $("table-title").scrollIntoView({block:"start"});
         });
@@ -4135,27 +4153,34 @@ return Plotly;
     return {x,y};
   }
 
-  async function renderLoad() {
+  let loadQueue = Promise.resolve();
+  let loadVersion = 0;
+  function renderLoad() {
+    const version = ++loadVersion;
+    loadQueue = loadQueue.catch(() => {}).then(async () => {
+    if (version !== loadVersion) return;
     if (!window.Plotly) {
       showProblem("backlog-status","積壓圖無法載入；下方摘要表仍可使用。");
       showProblem("latency-status","逐段耗時圖無法載入；下方摘要表仍可使用。");
       return;
     }
-    const end = Math.max(600,...data.sustained.trials.map(row => row.done));
-    const backlog = data.models.map(model => {
-      const rows = data.sustained.trials.filter(row => row.model === model), points = cumulativeTrace(rows,end);
-      return {type:"scatter",mode:"lines",name:model,x:points.x,y:points.y,line:{color:color(model),width:2.5,shape:"hv"},
+    const visibleModels = modelNames.filter(model => state.visible.has(model) && sustainedComplete(model));
+    const end = Math.max(600,...visibleModels.flatMap(model => sustainedRows(model).map(row => row.done)));
+    const backlog = visibleModels.map(model => {
+      const points = cumulativeTrace(sustainedRows(model),end);
+      return {type:"scatter",mode:"lines+markers",name:model,x:points.x,y:points.y,line:{color:color(model),width:2.5,shape:"hv"},
+        marker:{color:color(model),symbol:models[model].symbol,size:4},showlegend:false,
         hovertemplate:`${escape(model)}<br>時間：%{x:.2f} 分鐘<br>尚未終止：%{y} 段<extra></extra>`};
     });
     const backlogLayout = layout("未終止段落數（含處理中）","經過時間（分鐘）","未終止段落數");
-    backlogLayout.xaxis.range = [0,end / 60 + .1];
+    backlogLayout.xaxis.range = [0,state.backlogRange === "15" ? 15 : end / 60 + .1];
     backlogLayout.yaxis.rangemode = "tozero";
     backlogLayout.shapes = [{type:"line",x0:10,x1:10,y0:0,y1:1,yref:"paper",line:{color:styles().muted,width:1.5,dash:"dash"}}];
     backlogLayout.annotations = [{x:10,y:1,yref:"paper",text:"停止輸入",showarrow:false,xanchor:"right",yanchor:"bottom"}];
-    const latency = data.models.map(model => {
-      const rows = data.sustained.trials.filter(row => row.model === model).sort((a,b) => a.sequence - b.sequence);
+    const latency = visibleModels.map(model => {
+      const rows = sustainedRows(model).sort((a,b) => a.sequence - b.sequence);
       return {type:"scatter",mode:"markers",name:model,x:rows.map(row => row.arrival / 60),y:rows.map(row => row.done - row.arrival),
-        marker:{color:color(model),symbol:rows.map(row => row.truncated || row.missing_chinese ? "x" : models[model].symbol),size:8,opacity:.8},
+        marker:{color:color(model),symbol:rows.map(row => models[model].symbol + (row.truncated || row.missing_chinese ? "-open" : "")),size:8,opacity:.8},showlegend:false,
         text:rows.map(row => `${escape(model)} / ${escape(row.case)} / 第 ${row.sequence} 段` +
           `<br>抵達：${number(row.arrival)} 秒<br>API 終止：${number(row.done)} 秒` +
           `<br>截斷：${row.truncated ? "是" : "否"} / 無漢字：${row.missing_chinese ? "是" : "否"}`),
@@ -4163,51 +4188,49 @@ return Plotly;
     });
     const latencyLayout = layout("每段抵達至 API 終止","文字段落抵達時間（分鐘）","抵達至 API 終止（秒）");
     latencyLayout.xaxis.range = [0,10];
-    latencyLayout.yaxis.rangemode = "tozero";
+    latencyLayout.yaxis.type = state.latencyScale;
+    if (state.latencyScale === "linear") latencyLayout.yaxis.rangemode = "tozero";
     try {
       await Plotly.react($("backlog-chart"),backlog,backlogLayout,config);
-      $("backlog-status").hidden = true;
+      if (backlog.length) $("backlog-status").hidden = true;
+      else showProblem("backlog-status","目前所選模型沒有完整的 120 段持續輸入資料。請查看下方摘要表。");
     } catch { showProblem("backlog-status","積壓圖無法載入；下方摘要表仍可使用。"); }
     try {
       await Plotly.react($("latency-chart"),latency,latencyLayout,config);
-      $("latency-status").hidden = true;
+      if (latency.length) $("latency-status").hidden = true;
+      else showProblem("latency-status","目前所選模型沒有完整的 120 段持續輸入資料。請查看下方摘要表。");
     } catch { showProblem("latency-status","逐段耗時圖無法載入；下方摘要表仍可使用。"); }
+    });
   }
 
-  $("direction-select").addEventListener("change",event => {state.direction = event.target.value; renderTable(); renderQuality();});
-  $("speed-select").addEventListener("change",event => {state.speed = event.target.value; renderQuality();});
+  $("direction-select").addEventListener("change",event => {state.direction = event.target.value; renderLegend(); renderTable(); renderQuality();});
+  $("speed-select").addEventListener("change",event => {state.speed = event.target.value; renderLegend(); renderQuality();});
   $("sort-select").addEventListener("change",event => {state.sort = event.target.value; renderTable();});
   $("sort-direction").addEventListener("click",event => {
     state.ascending = !state.ascending;
     event.currentTarget.textContent = state.ascending ? "升冪 ↑" : "降冪 ↓";
     renderTable();
   });
-  $("model-legend").addEventListener("click",event => {
+  $("backlog-range").addEventListener("change",event => {state.backlogRange = event.target.value; renderLoad();});
+  $("latency-scale").addEventListener("change",event => {state.latencyScale = event.target.value; renderLoad();});
+  for (const id of ["model-legend","backlog-legend","latency-legend"]) $(id).addEventListener("click",event => {
     const button = event.target.closest("button");
     if (!button) return;
-    if (button.id === "show-all-models") {state.visible = new Set(data.models); state.pilotVisible = new Set(pilotModels);}
+    if (button.hasAttribute("data-show-all")) state.visible = new Set(modelNames);
     else {
-      const model = data.models[Number(button.dataset.modelIndex)];
+      const model = modelNames[Number(button.dataset.modelIndex)];
       if (state.visible.has(model)) state.visible.delete(model); else state.visible.add(model);
       if (!state.visible.has(state.expanded)) state.expanded = null;
     }
     const index = button.dataset.modelIndex;
-    renderLegend(); renderTable(); renderQuality();
-    if (index !== undefined) document.querySelector(`#model-legend [data-model-index="${index}"]`)?.focus();
-    else $("show-all-models")?.focus();
-  });
-  $("pilot-legend").addEventListener("click",event => {
-    const button = event.target.closest("button[data-pilot-index]");
-    if (!button) return;
-    const index = button.dataset.pilotIndex, model = pilotModels[Number(index)];
-    if (state.pilotVisible.has(model)) state.pilotVisible.delete(model); else state.pilotVisible.add(model);
-    renderLegend(); renderQuality();
-    document.querySelector(`#pilot-legend [data-pilot-index="${index}"]`)?.focus();
+    renderLegend(); renderTable(); renderLoadTable(); renderQuality(); renderLoad();
+    if (index !== undefined) document.querySelector(`#${id} [data-model-index="${index}"]`)?.focus();
+    else document.querySelector(`#${id} [data-show-all]`)?.focus();
   });
   $("model-table").addEventListener("click",event => {
     const button = event.target.closest("button[data-open-index]");
     if (!button) return;
-    const index = Number(button.dataset.openIndex), model = data.models[index];
+    const index = Number(button.dataset.openIndex), model = modelNames[index];
     state.expanded = state.expanded === model ? null : model;
     renderTable();
     document.querySelector(`[data-open-index="${index}"]`)?.focus();
@@ -4215,7 +4238,7 @@ return Plotly;
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change",() => {renderLegend(); renderQuality(); renderLoad();});
 
   renderLegend(); renderTable(); renderLoadTable(); renderSources(); renderQuality(); renderLoad();
-  window.translationEvolution = {data,pilot,state,cumulativeTrace};
+  window.translationEvolution = {data,state,cumulativeTrace};
 })();
 </script>
 </body>
