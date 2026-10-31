@@ -14,7 +14,7 @@
   "scope": "No speech, ASR, browser rendering or concurrent sessions; one run per model",
   "quality_note": "The separate 60-source LLM evaluation remains exploratory. This run did not rejudge semantics.",
   "events_queue_size_note": "After input stops, raw queue_size includes a sentinel; use arrival/dequeued timestamps.",
-  "source_run": "C:\\Users\\pappl\\AppData\\Local\\UGen300Meeting\\research\\translation-evaluation-20261029\\runs\\sustained-20261029-a",
+  "source_run": null,
   "models": {
     "qwen3:1.7b": {
       "arrivals": 120,
