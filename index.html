@@ -9,6 +9,7 @@
 code{overflow-wrap:anywhere}
 :root{--faithful:#087e62;--critical:#b42318}.natural-legend{display:flex;flex-wrap:wrap;gap:16px;margin:12px 0 0}.natural-legend span{display:inline-flex;align-items:center;gap:6px}.natural-plots{display:grid;grid-template-columns:1.15fr 1fr;gap:12px}.natural-plot{height:390px}@media(max-width:1000px){.natural-plots{grid-template-columns:1fr}.natural-plot{height:370px}}@media(prefers-color-scheme:dark){:root{--faithful:#62d8b1;--critical:#ff897e}}
 @media(max-width:800px){main{padding:20px 12px 40px}h1{font-size:26px}.card{padding:16px 12px}.plot{height:410px}.model-table>thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.model-table,.model-table>tbody{display:block}.model-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;padding:10px 8px;border-top:1px solid var(--line)}.model-row th,.model-row td{display:flex;justify-content:space-between;gap:8px;border:0;padding:5px 0;text-align:right}.model-row th:first-child,.model-row td[colspan]{grid-column:1/-1;text-align:left}.model-row td::before{content:attr(data-label);color:var(--muted);text-align:left}.detail-row,.detail-row>td{display:block;width:100%}.detail-row>td{border:0;padding:12px}}
+@media(max-width:800px){.ifp-table{min-width:0}.ifp-table>thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}.ifp-table,.ifp-table>tbody,.ifp-table tr,.ifp-table th,.ifp-table td{display:block}.ifp-table tr{border-top:1px solid var(--line);padding:8px 0}.ifp-table th,.ifp-table td{border:0;padding:3px 0}.ifp-table td:first-of-type::before{content:"已測結果：";color:var(--muted);font-weight:600}.ifp-table td:nth-of-type(2)::before{content:"採用限制：";color:var(--muted);font-weight:600}}
 @media(max-width:550px){.model-row{grid-template-columns:minmax(0,1fr)}}
 @media(prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#101722;--card:#182230;--ink:#e5edf8;--muted:#a6b4c7;--line:#334155;--accent:#93c5fd;--soft:#25354a}}
 </style>
@@ -18,9 +19,23 @@ code{overflow-wrap:anywhere}
 <header>
 <div class="eyebrow">UGEN300 / TRANSLATION RESEARCH</div>
 <h1>翻譯品質與速度比較</h1>
-<p class="updated">最後更新：<time datetime="2026-11-03T01:58:45.311Z">2026-11-03 09:58:45</time>（台灣時間 / UTC+8）</p>
+<p class="updated">最後更新：<time datetime="2026-11-06T16:49:06.720Z">2026-11-07 00:49:06</time>（台灣時間 / UTC+8）</p>
 </header>
 <p class="intro">本頁分開呈現自然會議與受控合成案例；兩者的來源、評分與計時口徑不同，不能直接比較分數。詳見<span>自然會議評測報告（原件保留本機）</span>。</p>
+
+<section class="card" aria-labelledby="ifp-translation-title">
+<div class="card-head"><div><h2 id="ifp-translation-title">不使用 UGen：IFP 本機翻譯比較</h2><p class="note">以下整理既有 IFP 實機收據；六題對照使用相同完整 user 提示，但模型、runtime、系統模板及量化不同。助理品質判讀未經獨立人工複核，已曝光的小樣本不是正式準確率。</p></div></div>
+<div class="table-wrap"><table class="history-table ifp-table"><thead><tr><th scope="col">路線</th><th scope="col">已測結果</th><th scope="col">採用限制</th></tr></thead><tbody>
+<tr><th scope="row">ML Kit Translate／IFP Android</th><td>英→中文：12 次回覆對應 8 組不同來源／輸出；4 組可供人工核對、4 組須先修正。相同短句的三次暖機 API 為 0.218／0.241／0.222 秒。</td><td>須預先準備語言包及繁簡轉換；商務詞、條件與轉換後語意仍有錯誤，速度不含辨識與畫面。</td></tr>
+<tr><th scope="row">Gemma4 E2B／IFP CPU4</th><td>共同六題中 5/6 符合當次來源任務判讀；另一 AMI gold 與 ASR 文字均未符合完整翻譯要求。</td><td>長文可截斷；同機與語音辨識併行曾變慢，仍須人工核對。</td></tr>
+<tr><th scope="row">Gemma4 E2B／IFP GPU</th><td>共同六題中 3/6 符合當次來源任務判讀。</td><td>曾漏條件或混入異語；與 CPU／NPU 語音辨識重疊時曾出現共享資源退化。</td></tr>
+<tr><th scope="row">TranslateGemma 4B／IFP CPU2</th><td>兩個中文開發來源的嚴格完整案例 0/2；原生耗時各 77.152／69.197 秒，逐案重載。</td><td>固定配方暫停；日期及人工文字覆寫語意仍待釐清。</td></tr>
+<tr><th scope="row">OPUS／IFP CPU2</th><td>中→英兩案、英→中一案；均生成完成，嚴格完整案例 0/3。</td><td>曾漏段或改錯角色與商務詞；固定配方暫停。</td></tr>
+<tr><th scope="row">NLLB 600M／IFP CPU2</th><td>中→英兩案，嚴格完整案例 0/2。</td><td>固定配方暫停；原模型卡標示非商用研究授權。</td></tr>
+<tr><th scope="row">Qwen2.5 1.5B／IFP NPU</th><td>共同六題中完整任務 0/6；來源忠實 2/6。</td><td>中國來源模型僅作研究對照，依本專案既定產品範圍排除。</td></tr>
+</tbody></table></div>
+<p class="note">各列分母、語向及評分條件不同，不能把數字混成模型排名。<span>完整比較與來源（原件保留本機）</span>；<a href="https://developers.google.com/ml-kit/language/translation">ML Kit 官方限制</a>／<a href="https://huggingface.co/facebook/nllb-200-distilled-600M">NLLB 模型卡</a>。</p>
+</section>
 
 <section class="card" aria-labelledby="natural-title">
 <div class="card-head"><div><h2 id="natural-title">自然會議：翻譯品質與速度</h2><p class="note">兩段中文、兩段英文多人會議各五分鐘；另列 PyCon 演講約五分鐘。IFP CPU / SenseVoice 五秒窗辨識後，四模型使用相同辨識文字及提示各翻譯 300 段。</p></div>
